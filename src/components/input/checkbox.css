@@ -1,0 +1,31 @@
+.checkbox-shift {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #5264ae;
+  border-radius: 2px;
+  position: absolute;
+  left: 38%;
+  top: 12%;
+}
+.custom-checkbox::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #5264ae;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: 0.2s;
+  z-index: 1;
+  border-radius: 1px;
+}
+.checkbox-shift:checked + label .custom-checkbox::after {
+  opacity: 1;
+}
