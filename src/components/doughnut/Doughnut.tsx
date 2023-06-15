@@ -1,16 +1,21 @@
 import Chart from 'react-apexcharts';
+import './doughnut.css';
 interface DoughnutChartType {
   data: number[];
   theme: boolean;
+  language: string;
 }
 
-export const DoughnutChart: React.FC<DoughnutChartType> = ({ data, theme }) => {
+export const DoughnutChart: React.FC<DoughnutChartType> = ({
+  data,
+  theme,
+  language,
+}) => {
   return (
     <div>
       <Chart
+        className='doughnut'
         type='donut'
-        width={600}
-        height={600}
         series={data}
         options={{
           legend: {
@@ -20,7 +25,16 @@ export const DoughnutChart: React.FC<DoughnutChartType> = ({ data, theme }) => {
               useSeriesColors: true,
             },
           },
-          labels: ['Base', 'Extra', 'Bonus/Vacation', 'Calls', 'SSP'],
+          labels:
+            language === 'en-US'
+              ? ['Base', 'Extra', 'Bonus/Vacation', 'Calls', 'SSP']
+              : [
+                  'Базовая ставка',
+                  'Экстра',
+                  'Бонус/Отпускные',
+                  'Бонус за звонки',
+                  'ЕСВ',
+                ],
           colors: ['#6F75F2', '#c24848', '#58c248', '#b248c2', '#c2a748'],
           grid: {
             borderColor: '#F67E7E',
@@ -49,7 +63,7 @@ export const DoughnutChart: React.FC<DoughnutChartType> = ({ data, theme }) => {
                     },
                   },
                   total: {
-                    label: 'In total',
+                    label: language === 'en-US' ? 'In total' : 'Доход',
                     fontFamily: 'Montserrat',
                     fontWeight: 700,
                     show: true,
@@ -61,7 +75,8 @@ export const DoughnutChart: React.FC<DoughnutChartType> = ({ data, theme }) => {
                         (a: number, b: number) => a + b,
                         0
                       );
-                      return result.toFixed(2) + '$';
+
+                      return result.toFixed(0) + '$';
                     },
                   },
                 },

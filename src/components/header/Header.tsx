@@ -1,29 +1,46 @@
 import { ToggleSwitch } from '../toggleSwitch/ToggleSwitch';
+
 import './header.css';
+import { useTranslations } from '../../hooks/useTranslations';
 
 interface HeaderType {
   toggleTheme: () => void;
   theme: boolean;
+  language: string;
+  handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const Header: React.FC<HeaderType> = ({ toggleTheme, theme }) => {
+export const Header: React.FC<HeaderType> = ({
+  toggleTheme,
+  theme,
+  language,
+  handleChange,
+}) => {
+  let { t } = useTranslations({ language });
+
   return (
     <header className='header'>
+      <div className='header-language-container'>
+        <select
+          className='select size'
+          value={language}
+          onChange={handleChange}
+        >
+          <option value='en-US'>EN</option>
+          <option value='ru-RU'>RU</option>
+        </select>
+      </div>
       <div className='header-theme-container'>
         <ToggleSwitch
           onClick={toggleTheme}
           onChange={toggleTheme}
           checked={theme}
-          on={'ON'}
-          off={'OFF'}
+          on={t.header.themeOn}
+          off={t.header.themeOff}
         />
       </div>
-      <h1 className='header-title'>Calculator</h1>
-      <p className='header-subtitle'>
-        Welcome to our website, where you can use a calculator that will help
-        you quickly and easily calculate your potential income based on your
-        hourly rate, bonuses and call ratings.
-      </p>
+      <h1 className='header-title'>{t.header.title}</h1>
+      <p className='header-subtitle'>{t.header.subtitle}</p>
     </header>
   );
 };

@@ -9,7 +9,7 @@ interface CheckboxType {
 
 export const Checkbox: React.FC<CheckboxType> = (props) => {
   return (
-    <div className='input-container'>
+    <div className='checkbox-container'>
       <input
         className='checkbox-shift'
         type='checkbox'

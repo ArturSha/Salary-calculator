@@ -1,6 +1,7 @@
 .group-result {
   max-width: 400px;
-  font-family: 'Poppins';
+  width: 100%;
+  font-family: 'Poppins', 'Arimo';
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -11,12 +12,24 @@
   display: flex;
   justify-content: space-between;
 }
+.group-result.pointer {
+  cursor: pointer;
+}
+
+.img-money {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -8px;
+}
 
 .group-result-circle {
+  position: relative;
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  margin-left: 4px;
 }
 
 .negative {

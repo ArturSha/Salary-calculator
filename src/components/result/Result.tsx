@@ -1,4 +1,5 @@
 import './result.css';
+import money from './money.png';
 
 interface ResultType {
   title: string;
@@ -7,6 +8,10 @@ interface ResultType {
   nightSalary?: number;
   color?: string;
   tax?: string;
+  picture?: boolean;
+  exchange?: boolean;
+  onClick?: () => void;
+  pointer?: boolean;
 }
 
 export const Result: React.FC<ResultType> = ({
@@ -16,17 +21,28 @@ export const Result: React.FC<ResultType> = ({
   nightSalary = 0,
   color,
   tax,
+  picture,
+  exchange,
+  onClick,
+  pointer,
 }) => {
   const isNegative = daySalary < 0 || nightSalary < 0;
   return (
-    <div className='group-result'>
+    <div
+      className={`group-result ${pointer ? 'pointer' : null}`}
+      onClick={onClick}
+    >
       <div>
         <span>
           {title}
           <span
             className='group-result-circle'
             style={{ backgroundColor: `${color}` }}
-          ></span>
+          >
+            {picture ? (
+              <img className='img-money' src={money} alt='money' />
+            ) : null}
+          </span>
         </span>
       </div>
       <div>
@@ -36,7 +52,7 @@ export const Result: React.FC<ResultType> = ({
             : isNightShift
             ? nightSalary.toFixed()
             : daySalary.toFixed()}
-          $
+          {exchange ? ' UAH' : '$'}
         </span>
       </div>
     </div>

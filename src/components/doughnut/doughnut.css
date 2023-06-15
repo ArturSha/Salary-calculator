@@ -1,0 +1,23 @@
+.doughnut {
+  height: 600px;
+  width: 600px;
+}
+
+@media (max-width: 620px) {
+  .doughnut {
+    height: 500px;
+    width: 500px;
+  }
+}
+
+@media (max-width: 520px) {
+  .doughnut {
+    height: 400px;
+    width: 400px;
+  }
+}
+@media (max-width: 420px) {
+  .doughnut {
+    display: none;
+  }
+}

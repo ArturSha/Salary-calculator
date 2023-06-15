@@ -1,0 +1,47 @@
+{
+  "header": {
+    "title": "Calculator",
+    "subtitle": "Welcome to our website, where you can use a calculator that will help you quickly and easily calculate your potential income based on your hourly rate, bonuses and call ratings.",
+    "themeOn": "ON",
+    "themeOff": "OFF"
+  },
+  "parameters": {
+    "parameters": "Parameters",
+    "rate": "Rate",
+    "totalHours": "Total Hours",
+    "calls": "Calls",
+    "bonus": "Bonus/Vacation",
+    "year": "Year",
+    "month": "Month",
+    "addSSP": "Add SSP",
+    "nightShift": "Night Shift",
+    "monthSelector": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "jule": "Jule",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
+  "income": {
+    "yourIncome": "Your Income",
+    "baseHours": "Base Hours",
+    "hrs": "hrs",
+    "base": "Base",
+    "extra": "Extra",
+    "bonus": "Bonus/Vacation",
+    "calls": "Calls",
+    "SSP": "SSB",
+    "total": "Total",
+    "loading": "Loading...",
+    "exRate": "NBU exchange rate",
+    "tax": "Tax"
+  }
+}

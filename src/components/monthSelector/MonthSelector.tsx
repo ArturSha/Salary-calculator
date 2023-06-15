@@ -1,31 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './monthSelector.css';
+import { useTranslations } from '../../hooks/useTranslations';
+import { saveToLocalStorage } from '../../helpers/saveToLocal';
+import { getValueFromLocalStorage } from '../../helpers/getFromLocal';
 
 type MonthOption = {
   value: number;
   label: string;
 };
 
-const monthOptions: MonthOption[] = [
-  { value: 0, label: 'January' },
-  { value: 1, label: 'February' },
-  { value: 2, label: 'March' },
-  { value: 3, label: 'April' },
-  { value: 4, label: 'May' },
-  { value: 5, label: 'June' },
-  { value: 6, label: 'July' },
-  { value: 7, label: 'August' },
-  { value: 8, label: 'September' },
-  { value: 9, label: 'October' },
-  { value: 10, label: 'November' },
-  { value: 11, label: 'December' },
-];
-
 type Props = {
   onChange: (value: number) => void;
+  language: string;
 };
 
-export const MonthSelector: React.FC<Props> = ({ onChange }) => {
+export const MonthSelector: React.FC<Props> = ({ onChange, language }) => {
+  let { t } = useTranslations({ language });
+
+  const monthOptions: MonthOption[] = [
+    { value: 0, label: `${t.parameters.monthSelector.january}` },
+    { value: 1, label: `${t.parameters.monthSelector.february}` },
+    { value: 2, label: `${t.parameters.monthSelector.march}` },
+    { value: 3, label: `${t.parameters.monthSelector.april}` },
+    { value: 4, label: `${t.parameters.monthSelector.may}` },
+    { value: 5, label: `${t.parameters.monthSelector.june}` },
+    { value: 6, label: `${t.parameters.monthSelector.jule}` },
+    { value: 7, label: `${t.parameters.monthSelector.august}` },
+    { value: 8, label: `${t.parameters.monthSelector.september}` },
+    { value: 9, label: `${t.parameters.monthSelector.october}` },
+    { value: 10, label: `${t.parameters.monthSelector.november}` },
+    { value: 11, label: `${t.parameters.monthSelector.december}` },
+  ];
+
   const [selectedMonth, setSelectedMonth] = useState<MonthOption>(
     monthOptions[0]
   );
@@ -37,14 +43,24 @@ export const MonthSelector: React.FC<Props> = ({ onChange }) => {
     );
     if (selectedOption) {
       setSelectedMonth(selectedOption);
+      saveToLocalStorage('month', selectedOption);
+
       onChange(value);
     }
   };
 
+  useEffect(() => {
+    const savedMonth = getValueFromLocalStorage('month');
+
+    if (savedMonth && typeof savedMonth === 'object') {
+      setSelectedMonth(savedMonth);
+    }
+  }, []);
+
   return (
     <div className='input-container'>
-      <label className='label-select'>
-        Month
+      <label>
+        {t.parameters.month}
         <select
           className='select'
           value={selectedMonth.value}

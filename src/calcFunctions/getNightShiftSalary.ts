@@ -4,6 +4,8 @@ interface CountSalaryArg {
   bonus: string;
   calls: string;
   addTax: boolean;
+  exRate: { loading: boolean; usRate: number };
+  exchange: boolean;
 }
 interface SalaryData {
   salary: number;
@@ -62,6 +64,9 @@ export const countSalary = (data: CountSalaryArg): SalaryData => {
   if (data.addTax) {
     ssb = 43;
     salary += ssb;
+  }
+  if (data.exchange) {
+    salary *= data.exRate.usRate;
   }
 
   return { salary, baseSalary, extraSalary, bonus, callsBonus, ssb };

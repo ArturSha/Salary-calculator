@@ -4,9 +4,11 @@ import './input.css';
 interface InputType {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   step?: string;
   label: string;
   type: string;
+  min?: string;
 }
 
 export const Input: React.FC<InputType> = (props) => {
@@ -17,13 +19,14 @@ export const Input: React.FC<InputType> = (props) => {
       if (inputRef.current && inputRef.current.contains(event.target as Node)) {
         event.preventDefault();
         const inputStep = parseFloat(props.step || '1');
+        const currentValue = parseFloat(props.value) || 0;
         if (event.deltaY > 0) {
           props.onChange({
-            target: { value: (parseFloat(props.value) - inputStep).toString() },
+            target: { value: (currentValue - inputStep).toString() },
           } as React.ChangeEvent<HTMLInputElement>);
         } else if (event.deltaY < 0) {
           props.onChange({
-            target: { value: (parseFloat(props.value) + inputStep).toString() },
+            target: { value: (currentValue + inputStep).toString() },
           } as React.ChangeEvent<HTMLInputElement>);
         }
       }
@@ -47,11 +50,13 @@ export const Input: React.FC<InputType> = (props) => {
       <label>
         {props.label}
         <input
+          min={props.min}
           className='input'
           type={props.type}
           step={props.step}
           value={props.value}
           onChange={props.onChange}
+          onBlur={props.onBlur}
           ref={inputRef}
         />
       </label>

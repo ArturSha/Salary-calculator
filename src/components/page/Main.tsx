@@ -8,40 +8,50 @@ import { Result } from '../result/Result';
 import { Checkbox } from '../input/Checkbox';
 import { getFivePercent } from '../../calcFunctions/getTaxFivePercent';
 import { DoughnutChart } from '../doughnut/Doughnut';
+import { useTranslations } from '../../hooks/useTranslations';
+import { saveToLocalStorage } from '../../helpers/saveToLocal';
+import { getValueFromLocalStorage } from '../../helpers/getFromLocal';
 import './main.css';
 
 interface MainType {
   theme: boolean;
+  language: string;
 }
 
-export const Main: React.FC<MainType> = ({ theme }) => {
+export const Main: React.FC<MainType> = ({ theme, language }) => {
   const [rate, setRate] = useState<string>('');
-  const [hours, setHours] = useState<string>('0');
-  const [bonus, setBonus] = useState<string>('0');
+  const [hours, setHours] = useState<string>('');
+  const [bonus, setBonus] = useState<string>('');
   const [calls, setCalls] = useState<string>('27');
   const [year, setYear] = useState<string>(`${new Date().getFullYear()}`);
   const [month, setMonth] = useState<string>('0');
   const [isNightShift, setIsNightShift] = useState<boolean>(false);
+  const [taxRate, setTaxRate] = useState<boolean>(true);
   const [addTax, setAddTax] = useState<boolean>(false);
-
   const [exRate, setExRate] = useState({ loading: false, usRate: 0 });
+  const [exchange, setExchange] = useState<boolean>(false);
+
+  let { t } = useTranslations({ language });
 
   const baseForDayShift = getWorkingDaysOfMonth(+year, +month);
 
   useEffect(() => {
-    const savedRate = localStorage.getItem('rate');
-    const savedShift = localStorage.getItem('isNightShift');
-    const savedTax = localStorage.getItem('tax');
+    const valuePairs: [string, React.Dispatch<React.SetStateAction<any>>][] = [
+      ['rate', setRate],
+      ['isNightShift', setIsNightShift],
+      ['tax', setAddTax],
+      ['taxRate', setTaxRate],
+      ['hours', setHours],
+      ['bonus', setBonus],
+      ['calls', setCalls],
+    ];
 
-    if (savedRate) {
-      setRate(savedRate);
-    }
-    if (savedShift === 'true') {
-      setIsNightShift(true);
-    }
-    if (savedTax === 'true') {
-      setAddTax(true);
-    }
+    valuePairs.forEach(([key, setValue]) => {
+      const savedValue = getValueFromLocalStorage(key);
+      if (savedValue !== null) {
+        setValue(savedValue);
+      }
+    });
 
     setExRate({ loading: true, usRate: 0 });
     const apiURL =
@@ -61,43 +71,94 @@ export const Main: React.FC<MainType> = ({ theme }) => {
   const toggleTax = () => {
     setAddTax((addTax) => !addTax);
     const value = !addTax;
-    localStorage.setItem('tax', value.toString());
+    saveToLocalStorage('tax', value);
+  };
+
+  const toggleTaxRate = () => {
+    setTaxRate((taxRate) => !taxRate);
+    const value = !taxRate;
+    saveToLocalStorage('taxRate', value);
+  };
+
+  const toggleExchange = () => {
+    setExchange((exchange) => !exchange);
   };
 
   const toggleNightShiftStatus = () => {
     setIsNightShift((isNightShift) => !isNightShift);
     const value = !isNightShift;
-    localStorage.setItem('isNightShift', value.toString());
+    saveToLocalStorage('isNightShift', value);
   };
 
   const handleRate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, +e.target.value).toString();
-    setRate(value);
-    localStorage.setItem('rate', value);
+    const value = e.target.value.toString();
+    if (Number(value) < 0) {
+      setRate('0');
+      saveToLocalStorage('rate', '0');
+    } else {
+      setRate(value);
+      saveToLocalStorage('rate', value);
+    }
   };
 
   const handleHours = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, +e.target.value).toString();
-    setHours(value);
+    const value = e.target.value.toString();
+
+    if (Number(value) < 0) {
+      setHours('0');
+      saveToLocalStorage('hours', '0');
+    } else {
+      setHours(value);
+      saveToLocalStorage('hours', value);
+    }
   };
 
   const handleBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, +e.target.value).toString();
-
-    setBonus(value);
+    const value = e.target.value.toString();
+    if (Number(value) < 0) {
+      setBonus('0');
+      saveToLocalStorage('bonus', '0');
+    } else {
+      setBonus(value);
+      saveToLocalStorage('bonus', value);
+    }
   };
 
   const handleCalls = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, +e.target.value).toString();
-    setCalls(value);
+    const value = e.target.value.toString();
+
+    if (Number(value) > 30) {
+      saveToLocalStorage('calls', '30');
+      setCalls('30');
+    } else {
+      setCalls(value);
+      saveToLocalStorage('calls', Number(value) > 23 ? value : '27');
+    }
+  };
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isValid = Number(calls) >= 24 && Number(calls) <= 30;
+    const value = e.target.value.toString();
+    if (isValid) {
+      setCalls(value);
+    } else {
+      setCalls('27');
+    }
   };
 
   const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, +e.target.value).toString();
+    const value = e.target.value.toString();
     setYear(value);
   };
 
-  const salaryResult = countSalary({ rate, hours, bonus, calls, addTax });
+  const salaryResult = countSalary({
+    rate,
+    hours,
+    bonus,
+    calls,
+    addTax,
+    exRate,
+    exchange,
+  });
   const daySalaryResult = countDaySalary({
     baseForDayShift,
     rate,
@@ -105,12 +166,16 @@ export const Main: React.FC<MainType> = ({ theme }) => {
     bonus,
     calls,
     addTax,
+    exRate,
+    exchange,
   });
 
   const salaryTotal = isNightShift
     ? salaryResult.salary
     : daySalaryResult.salary;
-  const tax = getFivePercent(salaryTotal, exRate.usRate);
+
+  const tax = getFivePercent(salaryTotal, exRate.usRate, taxRate, exchange);
+
   const handleMonthChange = (value: number) => {
     const selectedMonth = String(value);
     setMonth(selectedMonth);
@@ -137,33 +202,37 @@ export const Main: React.FC<MainType> = ({ theme }) => {
     <div className='container'>
       <div className='container-options'>
         <div className='container-parameters'>
-          <h2 className='options-subtitle'>Parameters</h2>
+          <h2 className='options-subtitle'>{t.parameters.parameters}</h2>
 
           <div className='container-parameters-inputs'>
             <Input
               onChange={handleRate}
+              min='0'
               value={rate}
               step='0.5'
               type='number'
-              label='Rate'
+              label={t.parameters.rate}
             />
 
             <Input
               value={hours}
               onChange={handleHours}
-              label='Total Hours'
+              label={t.parameters.totalHours}
               type='number'
+              min='0'
             />
             <Input
               value={calls}
               onChange={handleCalls}
-              label='Calls'
+              min='24'
+              label={t.parameters.calls}
               type='number'
+              onBlur={handleBlur}
             />
             <Input
               value={bonus}
               onChange={handleBonus}
-              label='Bonus/Vacation'
+              label={t.parameters.bonus}
               type='number'
             />
 
@@ -172,19 +241,23 @@ export const Main: React.FC<MainType> = ({ theme }) => {
                 <Input
                   value={year}
                   onChange={handleYear}
-                  label='Year'
+                  label={t.parameters.year}
                   type='number'
                 />
-                <MonthSelector onChange={handleMonthChange} />{' '}
+                <MonthSelector
+                  language={language}
+                  onChange={handleMonthChange}
+                />
               </>
             ) : null}
-
+          </div>
+          <div className='checkboxes-container'>
             <Checkbox
               onChange={toggleTax}
               id='tax'
               htmlFor='tax'
               checked={addTax}
-              title='Add SSP'
+              title={t.parameters.addSSP}
             />
 
             <Checkbox
@@ -192,73 +265,87 @@ export const Main: React.FC<MainType> = ({ theme }) => {
               checked={isNightShift}
               id='shift'
               htmlFor='shift'
-              title='Night shift'
+              title={t.parameters.nightShift}
             />
           </div>
         </div>
         <div className='container-income'>
-          <h2 className='options-subtitle'>Your Income</h2>
+          <h2 className='options-subtitle'>{t.income.yourIncome}</h2>
           <div className='container-income-results'>
             {!isNightShift ? (
               <div className='group-result'>
-                <span> Base Hours</span> {baseForDayShift + ' hrs'}
+                <span> {t.income.baseHours}</span>{' '}
+                {baseForDayShift + ` ${t.income.hrs}`}
               </div>
             ) : null}
             <Result
-              title='Base'
+              title={t.income.base}
               isNightShift={isNightShift}
               daySalary={daySalaryResult.baseSalary}
               nightSalary={salaryResult.baseSalary}
               color='#6F75F2'
             />
             <Result
-              title='Extra'
+              title={t.income.extra}
               isNightShift={isNightShift}
               daySalary={daySalaryResult.extraSalary}
               nightSalary={salaryResult.extraSalary}
               color='#c24848'
             />
             <Result
-              title='Bonus/Vacation'
+              title={t.income.bonus}
               isNightShift={isNightShift}
               daySalary={daySalaryResult.bonus}
               nightSalary={salaryResult.bonus}
               color='#58c248'
             />
             <Result
-              title='Calls'
+              title={t.income.calls}
               isNightShift={isNightShift}
               daySalary={daySalaryResult.callsBonus}
               nightSalary={salaryResult.callsBonus}
               color='#b248c2'
             />
-            {addTax ? <Result title='SSP' tax='43' color='#c2a748' /> : null}
+            {addTax ? (
+              <Result title={t.income.SSP} tax='43' color='#c2a748' />
+            ) : null}
             <Result
-              title='Total'
+              onClick={toggleExchange}
+              title={t.income.total}
               isNightShift={isNightShift}
               daySalary={daySalaryResult.salary}
               nightSalary={salaryResult.salary}
+              picture={true}
+              exchange={exchange}
+              pointer={true}
             />
 
             {exRate.loading ? (
-              <div className='group-result'>'Loading...' </div>
+              <div className='group-result'>{t.income.loading} </div>
             ) : (
               <div className='group-result'>
-                <span> NBU exchange rate </span> {exRate.usRate}
+                <span> {t.income.exRate} </span> {exRate.usRate}
               </div>
             )}
             {exRate.loading ? (
-              <div className='group-result'>'Loading...' </div>
+              <div className='group-result'>{t.income.loading} </div>
             ) : (
-              <div className='group-result'>
-                <span>5% tax </span> {tax + ' UAH'}
+              <div className='group-result pointer' onClick={toggleTaxRate}>
+                <span>
+                  {taxRate ? '5%' : '2%'} {t.income.tax}
+                </span>{' '}
+                {tax + ' UAH'}
               </div>
             )}
           </div>
         </div>
       </div>
       <div className='contaner-doughnut'>
-        <DoughnutChart data={dataForDoughnut[0]} theme={theme}></DoughnutChart>
+        <DoughnutChart
+          language={language}
+          data={dataForDoughnut[0]}
+          theme={theme}
+        ></DoughnutChart>
       </div>
     </div>
   );
