@@ -37,6 +37,7 @@ input:focus {
 
 /* LABEL ======================================= */
 label {
+  position: relative;
   display: flex;
   flex-direction: column;
   font-family: 'Poppins', 'Arimo', sans-serif;

@@ -1,0 +1,10 @@
+.inputs-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+@media (max-width: 880px) {
+  .inputs-container {
+    flex-wrap: wrap;
+  }
+}

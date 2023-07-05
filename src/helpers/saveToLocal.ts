@@ -1,8 +1,9 @@
 export const saveToLocalStorage = (
+  name: string,
   key: string,
   value: string | number | boolean | {}
 ) => {
-  const savedData = localStorage.getItem('settings');
+  const savedData = localStorage.getItem(name);
   const parsedData = savedData ? JSON.parse(savedData) : [];
 
   const existingObject = parsedData.find((obj: any) => obj[key] !== undefined);
@@ -12,5 +13,5 @@ export const saveToLocalStorage = (
     parsedData.push({ [key]: value });
   }
 
-  localStorage.setItem('settings', JSON.stringify(parsedData));
+  localStorage.setItem(name, JSON.stringify(parsedData));
 };

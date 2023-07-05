@@ -9,6 +9,7 @@ interface InputType {
   label: string;
   type: string;
   min?: string;
+  modal?: React.ReactNode;
 }
 
 export const Input: React.FC<InputType> = (props) => {
@@ -59,6 +60,7 @@ export const Input: React.FC<InputType> = (props) => {
           onBlur={props.onBlur}
           ref={inputRef}
         />
+        {props.modal}
       </label>
     </div>
   );

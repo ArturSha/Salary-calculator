@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 1280px;
+  width: 100%;
+  margin: 60px auto 0;
+  padding: 6px 6px 12px 6px;
+}
+.container-options {
+  max-width: 480px;
+}
+
+.options-subtitle {
+  font-family: 'Montserrat', 'Arimo', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 40px 0;
+  text-align: center;
+}
+@media (max-width: 1080px) {
+  .container {
+    flex-wrap: wrap;
+    margin: 40px auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    margin: 0 auto;
+  }
+  .header-subtitle {
+    margin: 10px auto;
+    padding: 4px 12px;
+  }
+}

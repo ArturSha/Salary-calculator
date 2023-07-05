@@ -39,6 +39,28 @@
   text-align: center;
   letter-spacing: -0.01em;
   max-width: 860px;
-  padding: 20px 12px;
-  margin: 32px auto;
+  padding: 16px 12px;
+  margin: 24px auto;
+}
+
+.header-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.link {
+  color: black;
+  font-family: 'Poppins', 'Arimo', sans-serif;
+}
+.link.active {
+  color: black;
+  border-bottom: 4px solid #62b1db;
+}
+#dark .link {
+  color: #d1eaff;
+}
+#dark .link.active {
+  color: #d1eaff;
+  border-bottom: 4px solid #f4e79e;
 }

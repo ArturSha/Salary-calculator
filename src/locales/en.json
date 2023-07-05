@@ -3,7 +3,9 @@
     "title": "Calculator",
     "subtitle": "Welcome to our website, where you can use a calculator that will help you quickly and easily calculate your potential income based on your hourly rate, bonuses and call ratings.",
     "themeOn": "ON",
-    "themeOff": "OFF"
+    "themeOff": "OFF",
+    "calculator": "Calculator",
+    "archive": "Archive"
   },
   "parameters": {
     "parameters": "Parameters",
@@ -43,5 +45,12 @@
     "loading": "Loading...",
     "exRate": "NBU exchange rate",
     "tax": "Tax"
+  },
+  "button": { "button": "Save", "buttonPDF": "Download PDF" },
+  "archive": { "total": "Total:" },
+  "modalCalc": {
+    "title": "Convert minutes into hours",
+    "minutes": "Minutes",
+    "result": "Result"
   }
 }

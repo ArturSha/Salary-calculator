@@ -8,7 +8,7 @@ interface CountSalaryArg {
   exRate: { loading: boolean; usRate: number };
   exchange: boolean;
 }
-interface SalaryData {
+export interface SalaryData {
   salary: number;
   baseSalary: number;
   extraSalary: number;

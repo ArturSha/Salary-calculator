@@ -1,0 +1,49 @@
+.archive-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
+}
+
+.archive-salary-container {
+  padding: 12px;
+  max-width: 300px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.archive-salary-item {
+  position: relative;
+  display: flex;
+  margin-bottom: 8px;
+  justify-content: space-between;
+  border-bottom: 1px solid #9d9d9d;
+}
+
+.delete__button {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  width: 28px;
+  right: -28px;
+  top: -8px;
+  transition: 0.3s;
+}
+.delete__button.year {
+  top: 0;
+}
+
+.archive-salary-item:hover .delete__button {
+  opacity: 1;
+  transition: 0.3s;
+}
+.archive-salary__title {
+  position: relative;
+  border-bottom: 1px solid #9d9d9d;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.archive-salary__title:hover .delete__button {
+  opacity: 1;
+  transition: 0.3s;
+}

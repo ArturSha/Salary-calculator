@@ -12,13 +12,14 @@ export const DoughnutChart: React.FC<DoughnutChartType> = ({
   language,
 }) => {
   return (
-    <div>
+    <div className='contaner-doughnut'>
       <Chart
         className='doughnut'
         type='donut'
         series={data}
         options={{
           legend: {
+            position: 'bottom',
             fontSize: '18px',
             labels: {
               colors: '',

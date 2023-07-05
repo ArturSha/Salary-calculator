@@ -1,3 +1,5 @@
+import { SalaryData } from './getDayShiftSalary';
+
 interface CountSalaryArg {
   rate: string;
   hours: string;
@@ -6,14 +8,6 @@ interface CountSalaryArg {
   addTax: boolean;
   exRate: { loading: boolean; usRate: number };
   exchange: boolean;
-}
-interface SalaryData {
-  salary: number;
-  baseSalary: number;
-  extraSalary: number;
-  bonus: number;
-  callsBonus: number;
-  ssb: number;
 }
 
 export const countSalary = (data: CountSalaryArg): SalaryData => {

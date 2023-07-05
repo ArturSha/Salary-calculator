@@ -1,7 +1,7 @@
 import { ToggleSwitch } from '../toggleSwitch/ToggleSwitch';
-
-import './header.css';
 import { useTranslations } from '../../hooks/useTranslations';
+import { NavLink } from 'react-router-dom';
+import './header.css';
 
 interface HeaderType {
   toggleTheme: () => void;
@@ -30,6 +30,7 @@ export const Header: React.FC<HeaderType> = ({
           <option value='ru-RU'>RU</option>
         </select>
       </div>
+
       <div className='header-theme-container'>
         <ToggleSwitch
           onClick={toggleTheme}
@@ -41,6 +42,22 @@ export const Header: React.FC<HeaderType> = ({
       </div>
       <h1 className='header-title'>{t.header.title}</h1>
       <p className='header-subtitle'>{t.header.subtitle}</p>
+      <nav className='header-navigation'>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'link active' : 'link')}
+          to={'/Salary-calculator/'}
+          end
+        >
+          {t.header.calculator}
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? 'link active' : 'link')}
+          to={'/Salary-calculator/archive'}
+          end
+        >
+          {t.header.archive}
+        </NavLink>
+      </nav>
     </header>
   );
 };

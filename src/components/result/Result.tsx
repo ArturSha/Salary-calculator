@@ -1,5 +1,6 @@
-import './result.css';
+import { RefObject } from 'react';
 import money from './money.png';
+import './result.css';
 
 interface ResultType {
   title: string;
@@ -10,8 +11,10 @@ interface ResultType {
   tax?: string;
   picture?: boolean;
   exchange?: boolean;
-  onClick?: () => void;
   pointer?: boolean;
+  spanRef?: RefObject<HTMLSpanElement>;
+
+  onClick?: () => void;
 }
 
 export const Result: React.FC<ResultType> = ({
@@ -23,8 +26,9 @@ export const Result: React.FC<ResultType> = ({
   tax,
   picture,
   exchange,
-  onClick,
   pointer,
+  spanRef,
+  onClick,
 }) => {
   const isNegative = daySalary < 0 || nightSalary < 0;
   return (
@@ -46,7 +50,10 @@ export const Result: React.FC<ResultType> = ({
         </span>
       </div>
       <div>
-        <span className={`${isNegative ? 'negative' : 'positive'}`}>
+        <span
+          ref={spanRef}
+          className={`${isNegative ? 'negative' : 'positive'}`}
+        >
           {tax
             ? tax
             : isNightShift
