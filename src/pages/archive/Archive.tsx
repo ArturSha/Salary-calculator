@@ -32,7 +32,26 @@ export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
     }
   };
 
-  const deleteMonth = (year: string, monthIndex?: number) => {
+  const deleteYear = (year: string) => {
+    const confirmed = window.confirm(
+      `${t.modalConfirm.firstPart} ${year} ${t.modalConfirm.secondPart}`
+    );
+    if (confirmed) {
+      setSalary((prevSalary: Root) => {
+        const updatedSalary = [...prevSalary];
+        const yearIndex = updatedSalary.findIndex(
+          (item: Root2) => item.year === year
+        );
+        if (yearIndex !== -1) {
+          updatedSalary.splice(yearIndex, 1);
+          saveSalaryToLocalStorage(updatedSalary);
+        }
+        return updatedSalary;
+      });
+    }
+  };
+
+  const deleteMonth = (year: string, monthIndex: number) => {
     setSalary((prevSalary: Root) => {
       const updatedSalary = [...prevSalary];
       const yearIndex = updatedSalary.findIndex(
@@ -40,14 +59,10 @@ export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
       );
 
       if (yearIndex !== -1) {
-        if (monthIndex === undefined) {
-          updatedSalary.splice(yearIndex, 1);
-        } else {
-          updatedSalary[yearIndex].months.splice(monthIndex, 1);
+        updatedSalary[yearIndex].months.splice(monthIndex, 1);
 
-          if (updatedSalary[yearIndex].months.length === 0) {
-            updatedSalary.splice(yearIndex, 1);
-          }
+        if (updatedSalary[yearIndex].months.length === 0) {
+          updatedSalary.splice(yearIndex, 1);
         }
 
         saveSalaryToLocalStorage(updatedSalary);
@@ -72,7 +87,7 @@ export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
               <h2 className='archive-salary__title'>
                 {item.year}
                 <img
-                  onClick={() => deleteMonth(item.year)}
+                  onClick={() => deleteYear(item.year)}
                   className='delete__button year'
                   src={basket}
                   alt='delete'

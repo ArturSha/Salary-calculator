@@ -52,5 +52,9 @@
     "title": "Convert minutes into hours",
     "minutes": "Minutes",
     "result": "Result"
+  },
+  "modalConfirm": {
+    "firstPart": "Are you sure you want to delete the",
+    "secondPart": "year ?"
   }
 }
