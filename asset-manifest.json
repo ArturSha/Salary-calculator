@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/Salary-calculator/static/css/main.95f54747.css",
-    "main.js": "/Salary-calculator/static/js/main.aaa0409a.js",
+    "main.css": "/Salary-calculator/static/css/main.734514d4.css",
+    "main.js": "/Salary-calculator/static/js/main.60ad35b1.js",
     "static/js/498.71d2491c.chunk.js": "/Salary-calculator/static/js/498.71d2491c.chunk.js",
     "static/js/703.c2b9f0be.chunk.js": "/Salary-calculator/static/js/703.c2b9f0be.chunk.js",
     "static/js/258.efee7e81.chunk.js": "/Salary-calculator/static/js/258.efee7e81.chunk.js",
     "static/media/watch.svg": "/Salary-calculator/static/media/watch.531a79e6844c7670ec6162596885970e.svg",
     "static/media/bin.svg": "/Salary-calculator/static/media/bin.3fe6104b74a2099585d7efdaa39c7379.svg",
+    "static/media/question.svg": "/Salary-calculator/static/media/question.635dcd131ae7b0290f954001f6dc73f8.svg",
     "index.html": "/Salary-calculator/index.html",
-    "main.95f54747.css.map": "/Salary-calculator/static/css/main.95f54747.css.map",
-    "main.aaa0409a.js.map": "/Salary-calculator/static/js/main.aaa0409a.js.map",
+    "main.734514d4.css.map": "/Salary-calculator/static/css/main.734514d4.css.map",
+    "main.60ad35b1.js.map": "/Salary-calculator/static/js/main.60ad35b1.js.map",
     "498.71d2491c.chunk.js.map": "/Salary-calculator/static/js/498.71d2491c.chunk.js.map",
     "703.c2b9f0be.chunk.js.map": "/Salary-calculator/static/js/703.c2b9f0be.chunk.js.map",
     "258.efee7e81.chunk.js.map": "/Salary-calculator/static/js/258.efee7e81.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.95f54747.css",
-    "static/js/main.aaa0409a.js"
+    "static/css/main.734514d4.css",
+    "static/js/main.60ad35b1.js"
   ]
 }
