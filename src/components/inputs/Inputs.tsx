@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Input } from '../input/Input';
 import { MonthSelector } from '../monthSelector/MonthSelector';
 import { useTranslations } from '../../hooks/useTranslations';
-import svgWatch from './watch.svg';
-import './inputs.css';
 import { MinutesToHourModal } from '../../pages/minutesToHourModal/MinutesToHourModal';
+import svgWatch from './watch.svg';
+import question from './question.svg';
+import './inputs.css';
+import { BonusModal } from '../../pages/bonusModal/BonusModal';
 
 interface InputsType {
   language: string;
@@ -44,7 +46,13 @@ export const Inputs: React.FC<InputsType> = ({
   const [isTimeToHourModalActive, setIsTimeToHourModalActive] =
     useState<boolean>(false);
 
-  const handleModal = () => {
+  const [isBonusModalActive, setIsBonusModalActive] = useState<boolean>(false);
+
+  const handleBonusModal = () => {
+    setIsBonusModalActive(!isBonusModalActive);
+  };
+
+  const handleTimeModal = () => {
     setIsTimeToHourModalActive(!isTimeToHourModalActive);
   };
 
@@ -67,7 +75,7 @@ export const Inputs: React.FC<InputsType> = ({
         min='0'
         modal={
           <img
-            onClick={handleModal}
+            onClick={handleTimeModal}
             className='container-parameters-modal__svg-btn'
             src={svgWatch}
             alt='btn watch'
@@ -87,11 +95,24 @@ export const Inputs: React.FC<InputsType> = ({
         onChange={handleBonus}
         label={t.parameters.bonus}
         type='number'
+        modal={
+          <img
+            onClick={handleBonusModal}
+            className='container-parameters-modal__svg-btn'
+            src={question}
+            alt='btn watch'
+          />
+        }
+      />
+      <BonusModal
+        isModalActive={isBonusModalActive}
+        language={language}
+        setActive={handleBonusModal}
       />
       <MinutesToHourModal
         isModalActive={isTimeToHourModalActive}
         language={language}
-        setActive={handleModal}
+        setActive={handleTimeModal}
       />
 
       {!isNightShift ? (

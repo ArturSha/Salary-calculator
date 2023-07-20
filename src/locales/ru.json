@@ -47,7 +47,11 @@
     "tax": "Налог"
   },
   "button": { "button": "Сохранить", "buttonPDF": "Скачать PDF" },
-  "archive": { "total": "Всего:" },
+  "archive": {
+    "total": "Всего:",
+    "exist1": "Внимание! Месяц",
+    "exist2": "уже существует. Повторное сохранение может привести к замене данных."
+  },
   "modalCalc": {
     "title": "Конвертировать минуты в часы",
     "minutes": "Минуты",
@@ -56,5 +60,14 @@
   "modalConfirm": {
     "firstPart": "Вы уверены, что хотите удалить",
     "secondPart": "год ?"
+  },
+  "modalBonus": {
+    "holidays": "Праздники",
+    "newYear": "Новый Год",
+    "easter": "Пасха",
+    "trinity": "Троица",
+    "constitutionDay": "День Конституции",
+    "independenceDay": "День Независимости",
+    "christmas": "Рождество"
   }
 }

@@ -47,7 +47,11 @@
     "tax": "Tax"
   },
   "button": { "button": "Save", "buttonPDF": "Download PDF" },
-  "archive": { "total": "Total:" },
+  "archive": {
+    "total": "Total:",
+    "exist1": "Attention! The month",
+    "exist2": "already exists. Saving again may overwrite the existing data."
+  },
   "modalCalc": {
     "title": "Convert minutes into hours",
     "minutes": "Minutes",
@@ -56,5 +60,14 @@
   "modalConfirm": {
     "firstPart": "Are you sure you want to delete the",
     "secondPart": "year ?"
+  },
+  "modalBonus": {
+    "holidays": "Holidays",
+    "newYear": "New Year",
+    "easter": "Easter",
+    "trinity": "Trinity",
+    "constitutionDay": "Constitution day",
+    "independenceDay": "Independence day",
+    "christmas": "Christmas"
   }
 }

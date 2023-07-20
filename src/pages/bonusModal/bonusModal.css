@@ -1,0 +1,12 @@
+.modal-holiday__title {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-holiday__subtitle {
+  margin-top: 12px;
+  gap: 8px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: underline;
+}

@@ -53,10 +53,20 @@ export const AddToArchiveModal: React.FC<AddToArchiveModalTypes> = ({
       selectedOptionText = valueRef.current?.options[selectedIndex].text;
     }
 
+    let attentionFirstPart = t.archive.exist1;
+    let attentionSecondPart = t.archive.exist2;
+
     setActive(!isModalActive);
     if (spanRef.current) {
       const salary = spanRef.current.innerHTML;
-      saveToLocalArchive(year, selectedOptionText, selectedIndex, salary);
+      saveToLocalArchive(
+        year,
+        selectedOptionText,
+        selectedIndex,
+        salary,
+        attentionFirstPart,
+        attentionSecondPart
+      );
     }
   };
   const valueRef = useRef<HTMLSelectElement>(null);

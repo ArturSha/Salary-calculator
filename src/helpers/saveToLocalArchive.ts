@@ -4,7 +4,9 @@ export const saveToLocalArchive = (
   year: string,
   selectedMonth: string | undefined,
   selectedIndex: number | undefined,
-  salary: string
+  salary: string,
+  attentionFirst: string,
+  attentionSecond: string
 ) => {
   const savedData = localStorage.getItem('archive');
   const parsedData = savedData ? JSON.parse(savedData) : [];
@@ -21,8 +23,13 @@ export const saveToLocalArchive = (
     ].months.findIndex((monthObj: Month) => monthObj.index === selectedIndex);
 
     if (existingMonthIndex !== -1) {
-      updateArchive[existingYearIndex].months[existingMonthIndex].salary =
-        salary;
+      let exist = window.confirm(
+        `${attentionFirst} ${selectedMonth} ${attentionSecond}`
+      );
+      if (exist) {
+        updateArchive[existingYearIndex].months[existingMonthIndex].salary =
+          salary;
+      }
     } else {
       updateArchive[existingYearIndex].months.push({
         month: selectedMonth,
