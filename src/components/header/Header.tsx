@@ -45,14 +45,14 @@ export const Header: React.FC<HeaderType> = ({
       <nav className='header-navigation'>
         <NavLink
           className={({ isActive }) => (isActive ? 'link active' : 'link')}
-          to={'/Salary-calculator/'}
+          to={'/'}
           end
         >
           {t.header.calculator}
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? 'link active' : 'link')}
-          to={'/Salary-calculator/archive'}
+          to={'/archive'}
           end
         >
           {t.header.archive}

@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename='/Salary-calculator'>
         <Header
           toggleTheme={toggleTheme}
           theme={theme}
@@ -53,11 +53,11 @@ function App() {
         />
         <Routes>
           <Route
-            path='/Salary-calculator/'
+            path='/'
             element={<Main theme={theme} language={language} />}
           ></Route>
           <Route
-            path='/Salary-calculator/archive'
+            path='/archive'
             element={<Archive language={language} />}
           ></Route>
           <Route
