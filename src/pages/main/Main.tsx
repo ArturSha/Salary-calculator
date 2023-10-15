@@ -13,6 +13,7 @@ import { Inputs } from '../../components/inputs/Inputs';
 import { Button } from '../../components/button/Button';
 import { AddToArchiveModal } from '../addToArchiveModal/AddToArchiveModal';
 import './main.css';
+import { getCurrentDate } from '../../helpers/getCurrentDate';
 
 interface MainType {
   theme: boolean;
@@ -56,11 +57,10 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
     });
 
     setExRate({ loading: true, usRate: 0 });
-    const apiURL =
-      'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
+    const apiURL = `https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&date=${getCurrentDate()}&json`;
     fetch(apiURL)
       .then((res) => res.json())
-      .then((res) => setExRate({ loading: false, usRate: res[24].rate }))
+      .then((res) => setExRate({ loading: false, usRate: res[0].rate }))
       .catch((response) => {
         if (!response.ok) {
           setExRate({ loading: false, usRate: 0 });

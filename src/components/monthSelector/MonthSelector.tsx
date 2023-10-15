@@ -28,7 +28,7 @@ export const MonthSelector: React.ForwardRefExoticComponent<
       { value: 3, label: `${t.parameters.monthSelector.april}` },
       { value: 4, label: `${t.parameters.monthSelector.may}` },
       { value: 5, label: `${t.parameters.monthSelector.june}` },
-      { value: 6, label: `${t.parameters.monthSelector.jule}` },
+      { value: 6, label: `${t.parameters.monthSelector.july}` },
       { value: 7, label: `${t.parameters.monthSelector.august}` },
       { value: 8, label: `${t.parameters.monthSelector.september}` },
       { value: 9, label: `${t.parameters.monthSelector.october}` },

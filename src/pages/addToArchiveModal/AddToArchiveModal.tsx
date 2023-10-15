@@ -6,8 +6,8 @@ import { Result } from '../../components/result/Result';
 import { Input } from '../../components/input/Input';
 import { MonthSelector } from '../../components/monthSelector/MonthSelector';
 import { Button } from '../../components/button/Button';
-import './addToArchiveModal.css';
 import { Modal } from '../../components/modal/Modal';
+import './addToArchiveModal.css';
 
 interface AddToArchiveModalTypes {
   name: string;
