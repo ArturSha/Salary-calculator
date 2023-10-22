@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import './input.css';
 
 interface InputType {
@@ -9,59 +9,91 @@ interface InputType {
   label: string;
   type: string;
   min?: string;
-  modal?: React.ReactNode;
+  modal?: boolean;
+  modalClassName?: string;
+  modalSrc?: string;
+  modalAlt?: string;
+  modalOnClick?: () => void;
 }
 
-export const Input: React.FC<InputType> = (props) => {
+export const Input = memo((props: InputType) => {
+  const {
+    label,
+    onChange,
+    type,
+    value,
+    min,
+    modal,
+    onBlur,
+    step,
+    modalClassName,
+    modalOnClick,
+    modalSrc,
+    modalAlt,
+  } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    const currentRed = inputRef.current;
     const handleWheel = (event: WheelEvent) => {
-      if (inputRef.current && inputRef.current.contains(event.target as Node)) {
+      if (currentRed && currentRed.contains(event.target as Node)) {
         event.preventDefault();
-        const inputStep = parseFloat(props.step || '1');
-        const currentValue = parseFloat(props.value) || 0;
+        const inputStep = parseFloat(step || '1');
+        const currentValue = parseFloat(value) || 0;
         if (event.deltaY > 0) {
-          props.onChange({
+          onChange({
             target: { value: (currentValue - inputStep).toString() },
           } as React.ChangeEvent<HTMLInputElement>);
         } else if (event.deltaY < 0) {
-          props.onChange({
+          onChange({
             target: { value: (currentValue + inputStep).toString() },
           } as React.ChangeEvent<HTMLInputElement>);
         }
       }
     };
 
-    if (inputRef.current) {
-      inputRef.current.addEventListener('wheel', handleWheel, {
+    if (currentRed) {
+      currentRed.addEventListener('wheel', handleWheel, {
         passive: false,
       });
     }
 
     return () => {
-      if (inputRef.current) {
-        inputRef.current.removeEventListener('wheel', handleWheel);
+      if (currentRed) {
+        currentRed.removeEventListener('wheel', handleWheel);
       }
     };
-  }, [props]);
+  }, [onChange, step, value]);
 
   return (
     <div className='input-container'>
       <label>
-        {props.label}
+        {label}
         <input
-          min={props.min}
+          min={min}
           className='input'
-          type={props.type}
-          step={props.step}
-          value={props.value}
-          onChange={props.onChange}
-          onBlur={props.onBlur}
+          type={type}
+          step={step}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
           ref={inputRef}
         />
-        {props.modal}
+        {modal && (
+          <img
+            src={modalSrc}
+            alt={modalAlt}
+            className={modalClassName}
+            onClick={modalOnClick}
+          />
+        )}
+        {/* <img
+            onClick={handleBonusModal}
+            className='container-parameters-modal__svg-btn'
+            src={question}
+            alt='btn watch'
+          /> */}
       </label>
     </div>
   );
-};
+});

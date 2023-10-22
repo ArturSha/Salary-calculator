@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Checkbox } from '../checkbox/Checkbox';
 import { useTranslations } from '../../hooks/useTranslations';
 import './checkboxes.css';
@@ -11,13 +11,9 @@ interface CheckboxesType {
   toggleNightShiftStatus: () => void;
 }
 
-export const Checkboxes: React.FC<CheckboxesType> = ({
-  addTax,
-  isNightShift,
-  language,
-  toggleNightShiftStatus,
-  toggleTax,
-}) => {
+export const Checkboxes = memo((props: CheckboxesType) => {
+  const { addTax, isNightShift, language, toggleNightShiftStatus, toggleTax } =
+    props;
   let { t } = useTranslations({ language });
 
   return (
@@ -39,4 +35,4 @@ export const Checkboxes: React.FC<CheckboxesType> = ({
       />
     </div>
   );
-};
+});

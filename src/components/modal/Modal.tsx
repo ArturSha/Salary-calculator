@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import './modal.css';
 
 interface ModalTypes {
@@ -7,15 +7,11 @@ interface ModalTypes {
   children: any;
 }
 
-export const Modal: React.FC<ModalTypes> = ({
-  active,
-  setActive,
-  children,
-}) => {
-  const handleClick = () => {
+export const Modal = memo((props: ModalTypes) => {
+  const { active, setActive, children } = props;
+  const handleClick = useCallback(() => {
     setActive(false);
-  };
-
+  }, [setActive]);
   return (
     <div onClick={handleClick} className={active ? 'modal active' : 'modal'}>
       <div
@@ -29,4 +25,4 @@ export const Modal: React.FC<ModalTypes> = ({
       </div>
     </div>
   );
-};
+});

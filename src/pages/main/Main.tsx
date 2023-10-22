@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { countSalary } from '../../calcFunctions/getNightShiftSalary';
 import { countDaySalary } from '../../calcFunctions/getDayShiftSalary';
 import { getWorkingDaysOfMonth } from '../../calcFunctions/getWorkingHours';
@@ -12,8 +12,8 @@ import { Checkboxes } from '../../components/checkboxes/Checkboxes';
 import { Inputs } from '../../components/inputs/Inputs';
 import { Button } from '../../components/button/Button';
 import { AddToArchiveModal } from '../addToArchiveModal/AddToArchiveModal';
-import './main.css';
 import { getCurrentDate } from '../../helpers/getCurrentDate';
+import './main.css';
 
 interface MainType {
   theme: boolean;
@@ -36,7 +36,9 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
 
   let { t } = useTranslations({ language });
 
-  const baseForDayShift = getWorkingDaysOfMonth(+year, +month);
+  const baseForDayShift = useMemo(() => {
+    return getWorkingDaysOfMonth(+year, +month);
+  }, [month, year]);
 
   useEffect(() => {
     const valuePairs: [string, React.Dispatch<React.SetStateAction<any>>][] = [
@@ -70,33 +72,33 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       });
   }, []);
 
-  const toggleModal = () => {
+  const toggleModal = useCallback(() => {
     setIsArchiveModalActive(!isArchiveModalActive);
-  };
+  }, [isArchiveModalActive]);
 
-  const toggleTax = () => {
+  const toggleTax = useCallback(() => {
     setAddTax((addTax) => !addTax);
     const value = !addTax;
     saveToLocalStorage('parameters', 'tax', value);
-  };
+  }, [addTax]);
 
-  const toggleTaxRate = () => {
+  const toggleTaxRate = useCallback(() => {
     setTaxRate((taxRate) => !taxRate);
     const value = !taxRate;
     saveToLocalStorage('parameters', 'taxRate', value);
-  };
+  }, [taxRate]);
 
-  const toggleExchange = () => {
+  const toggleExchange = useCallback(() => {
     setExchange((exchange) => !exchange);
-  };
+  }, []);
 
-  const toggleNightShiftStatus = () => {
+  const toggleNightShiftStatus = useCallback(() => {
     setIsNightShift((isNightShift) => !isNightShift);
     const value = !isNightShift;
     saveToLocalStorage('parameters', 'isNightShift', value);
-  };
+  }, [isNightShift]);
 
-  const handleRate = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRate = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     if (Number(value) < 0) {
       setRate('0');
@@ -105,9 +107,9 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       setRate(value);
       saveToLocalStorage('parameters', 'rate', value);
     }
-  };
+  }, []);
 
-  const handleHours = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHours = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
 
     if (Number(value) < 0) {
@@ -117,9 +119,9 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       setHours(value);
       saveToLocalStorage('parameters', 'hours', value);
     }
-  };
+  }, []);
 
-  const handleBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBonus = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     if (Number(value) < 0) {
       setBonus('0');
@@ -128,9 +130,9 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       setBonus(value);
       saveToLocalStorage('parameters', 'bonus', value);
     }
-  };
+  }, []);
 
-  const handleCalls = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCalls = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
 
     if (Number(value) > 30) {
@@ -144,68 +146,76 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         Number(value) > 23 ? value : '27'
       );
     }
-  };
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isValid = Number(calls) >= 24 && Number(calls) <= 30;
-    const value = e.target.value.toString();
-    if (isValid) {
-      setCalls(value);
-    } else {
-      setCalls('27');
-    }
-  };
+  }, []);
+  const handleBlur = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const isValid = Number(calls) >= 24 && Number(calls) <= 30;
+      const value = e.target.value.toString();
+      if (isValid) {
+        setCalls(value);
+      } else {
+        setCalls('27');
+      }
+    },
+    [calls]
+  );
 
-  const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleYear = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     setYear(value);
-  };
+  }, []);
 
-  const nightShiftSalaryResult = countSalary({
-    rate,
-    hours,
-    bonus,
-    calls,
+  const salaryResult = useMemo(() => {
+    if (isNightShift) {
+      return countSalary({
+        rate,
+        hours,
+        bonus,
+        calls,
+        addTax,
+        exRate,
+        exchange,
+      });
+    }
+    return countDaySalary({
+      baseForDayShift,
+      rate,
+      hours,
+      bonus,
+      calls,
+      addTax,
+      exRate,
+      exchange,
+    });
+  }, [
     addTax,
-    exRate,
-    exchange,
-  });
-  const dayShiftSalaryResult = countDaySalary({
     baseForDayShift,
-    rate,
-    hours,
     bonus,
     calls,
-    addTax,
     exRate,
     exchange,
-  });
+    hours,
+    isNightShift,
+    rate,
+  ]);
 
-  const salaryTotal = isNightShift
-    ? nightShiftSalaryResult.salary
-    : dayShiftSalaryResult.salary;
+  const salaryTotal = salaryResult.salary;
 
   const tax = getFivePercent(salaryTotal, exRate.usRate, taxRate, exchange);
 
-  const handleMonthChange = (value: number) => {
+  const handleMonthChange = useCallback((value: number) => {
     const selectedMonth = String(value);
     setMonth(selectedMonth);
-  };
+  }, []);
 
-  const getAllData = isNightShift
-    ? [
-        Number(nightShiftSalaryResult.baseSalary.toFixed(2)),
-        Number(nightShiftSalaryResult.extraSalary.toFixed(2)),
-        Number(nightShiftSalaryResult.bonus.toFixed(2)),
-        Number(nightShiftSalaryResult.callsBonus.toFixed(2)),
-        Number(nightShiftSalaryResult.ssb.toFixed(2)),
-      ]
-    : [
-        Number(dayShiftSalaryResult.baseSalary.toFixed(2)),
-        Number(dayShiftSalaryResult.extraSalary.toFixed(2)),
-        Number(dayShiftSalaryResult.bonus.toFixed(2)),
-        Number(dayShiftSalaryResult.callsBonus.toFixed(2)),
-        Number(dayShiftSalaryResult.ssb.toFixed(2)),
-      ];
+  const getAllData = [
+    Number(salaryResult.baseSalary.toFixed(2)),
+    Number(salaryResult.extraSalary.toFixed(2)),
+    Number(salaryResult.bonus.toFixed(2)),
+    Number(salaryResult.callsBonus.toFixed(2)),
+    Number(salaryResult.ssb.toFixed(2)),
+  ];
+
   const dataForDoughnut = [getAllData];
 
   return (
@@ -242,8 +252,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
           language={language}
           isNightShift={isNightShift}
           baseForDayShift={baseForDayShift}
-          dayShiftSalaryResult={dayShiftSalaryResult}
-          nightShiftSalaryResult={nightShiftSalaryResult}
+          salaryResult={salaryResult}
           addTax={addTax}
           exchange={exchange}
           exRate={exRate}
@@ -260,17 +269,18 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         data={dataForDoughnut[0]}
         theme={theme}
       ></DoughnutChart>
-      <AddToArchiveModal
-        name={t.button.button}
-        isModalActive={isArchiveModalActive}
-        language={language}
-        exchange={exchange}
-        isNightShift={isNightShift}
-        dayShiftSalaryResult={dayShiftSalaryResult}
-        nightShiftSalaryResult={nightShiftSalaryResult}
-        setActive={setIsArchiveModalActive}
-        toggleExchange={toggleExchange}
-      />
+      {isArchiveModalActive && (
+        <AddToArchiveModal
+          name={t.button.button}
+          isModalActive={isArchiveModalActive}
+          language={language}
+          exchange={exchange}
+          isNightShift={isNightShift}
+          salaryResult={salaryResult}
+          setActive={setIsArchiveModalActive}
+          toggleExchange={toggleExchange}
+        />
+      )}
     </div>
   );
 };

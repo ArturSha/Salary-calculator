@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Input } from '../../components/input/Input';
 import { Modal } from '../../components/modal/Modal';
 import { useTranslations } from '../../hooks/useTranslations';
@@ -10,29 +10,30 @@ interface MinutesToHourModalTypes {
   setActive: (arg: boolean) => void;
 }
 
-export const MinutesToHourModal: React.FC<MinutesToHourModalTypes> = ({
-  isModalActive,
-  language,
-  setActive,
-}) => {
+export const MinutesToHourModal = memo((props: MinutesToHourModalTypes) => {
+  const { isModalActive, language, setActive } = props;
   const [minutes, setMinutes] = useState<string>('0');
   let { t } = useTranslations({ language });
 
-  const handleMinutes = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toString();
+  const handleMinutes = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.toString();
 
-    if (Number(value) < 0) {
-      setMinutes('0');
-    } else {
-      setMinutes(value);
-    }
-  };
-  const calcMinutestoHour = (value: string) => {
+      if (Number(value) < 0) {
+        setMinutes('0');
+      } else {
+        setMinutes(value);
+      }
+    },
+    []
+  );
+
+  const calcMinutestoHour = useCallback((value: string) => {
     const minutes = Number(value),
       result = minutes / 60;
 
     return result.toFixed(2);
-  };
+  }, []);
   const minutesToHour = calcMinutestoHour(minutes);
 
   return (
@@ -54,4 +55,4 @@ export const MinutesToHourModal: React.FC<MinutesToHourModalTypes> = ({
       </div>
     </Modal>
   );
-};
+});

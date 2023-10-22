@@ -1,12 +1,10 @@
-import { RefObject } from 'react';
+import { RefObject, memo } from 'react';
 import money from './money.png';
 import './result.css';
 
 interface ResultType {
   title: string;
-  isNightShift?: boolean;
-  daySalary?: number;
-  nightSalary?: number;
+  salaryResult?: number;
   color?: string;
   tax?: string;
   picture?: boolean;
@@ -17,20 +15,19 @@ interface ResultType {
   onClick?: () => void;
 }
 
-export const Result: React.FC<ResultType> = ({
-  title,
-  isNightShift,
-  daySalary = 0,
-  nightSalary = 0,
-  color,
-  tax,
-  picture,
-  exchange,
-  pointer,
-  spanRef,
-  onClick,
-}) => {
-  const isNegative = daySalary < 0 || nightSalary < 0;
+export const Result = memo((props: ResultType) => {
+  const {
+    title,
+    salaryResult = 0,
+    color,
+    tax,
+    picture,
+    exchange,
+    pointer,
+    spanRef,
+    onClick,
+  } = props;
+  const isNegative = salaryResult < 0;
   return (
     <div
       className={`group-result ${pointer ? 'pointer' : null}`}
@@ -54,14 +51,10 @@ export const Result: React.FC<ResultType> = ({
           ref={spanRef}
           className={`${isNegative ? 'negative' : 'positive'}`}
         >
-          {tax
-            ? tax
-            : isNightShift
-            ? nightSalary.toFixed()
-            : daySalary.toFixed()}
+          {tax ? tax : salaryResult.toFixed()}
           {exchange ? ' UAH' : '$'}
         </span>
       </div>
     </div>
   );
-};
+});

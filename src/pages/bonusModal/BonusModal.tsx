@@ -1,25 +1,27 @@
 import { Modal } from '../../components/modal/Modal';
 import { useTranslations } from '../../hooks/useTranslations';
 import { orthodoxEaster } from 'date-easter';
+import { memo } from 'react';
 import './bonusModal.css';
+
 interface BonusModalType {
   setActive: (arg: boolean) => void;
   isModalActive: boolean;
   language: string;
 }
-export const BonusModal: React.FC<BonusModalType> = ({
-  setActive,
-  isModalActive,
-  language,
-}) => {
+const year = new Date().getFullYear();
+const { month, day } = orthodoxEaster(year);
+
+export const BonusModal = memo((props: BonusModalType) => {
+  const { setActive, isModalActive, language } = props;
   let { t } = useTranslations({ language });
-  const year = new Date().getFullYear();
-  const { month, day } = orthodoxEaster(year);
+
   const getTrioDay = (year: number, month: number, day: number) => {
     const date = new Date(year, month - 1, day);
     date.setDate(date.getDate() + 49);
     return date.toLocaleDateString();
   };
+
   let trinity = getTrioDay(year, month, day);
 
   let dayWithZero = day < 10 ? '0' + day : day;
@@ -31,7 +33,7 @@ export const BonusModal: React.FC<BonusModalType> = ({
         <span> {t.modalBonus.newYear}:</span> <span> 01.01.{year}</span>
       </p>
       <p className='modal-holiday__subtitle'>
-        <span> {t.modalBonus.easter}:</span>{' '}
+        <span> {t.modalBonus.easter}:</span>
         <span>
           {dayWithZero}.0{month}.{year}
         </span>
@@ -50,4 +52,4 @@ export const BonusModal: React.FC<BonusModalType> = ({
       </p>
     </Modal>
   );
-};
+});

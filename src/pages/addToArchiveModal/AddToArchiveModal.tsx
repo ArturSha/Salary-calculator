@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from 'react';
+import React, { RefObject, memo, useCallback, useRef, useState } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { SalaryData } from '../../calcFunctions/getDayShiftSalary';
 import { saveToLocalArchive } from '../../helpers/saveToLocalArchive';
@@ -15,38 +15,33 @@ interface AddToArchiveModalTypes {
   isModalActive: boolean;
   exchange: boolean;
   isNightShift: boolean;
-  dayShiftSalaryResult: SalaryData;
-  nightShiftSalaryResult: SalaryData;
+  salaryResult: SalaryData;
+
   setActive: (arg: boolean) => void;
   toggleExchange: () => void;
 }
 
-export const AddToArchiveModal: React.FC<AddToArchiveModalTypes> = ({
-  name,
-  isModalActive,
-  language,
-  exchange,
-  isNightShift,
-  dayShiftSalaryResult,
-  nightShiftSalaryResult,
-  setActive,
-  toggleExchange,
-}) => {
-  const [month, setMonth] = useState<string>('0');
+export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
+  const {
+    name,
+    isModalActive,
+    language,
+    exchange,
+    salaryResult,
+    setActive,
+    toggleExchange,
+  } = props;
+
   const [year, setYear] = useState<string>(`${new Date().getFullYear()}`);
-  const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleYear = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     setYear(value);
-  };
+  }, []);
 
   let { t } = useTranslations({ language });
 
-  const handleMonthChange = (value: number) => {
-    const selectedMonth = String(value);
-    setMonth(selectedMonth);
-  };
   const spanRef: RefObject<HTMLSpanElement> = useRef(null);
-  const handleButtonClick = () => {
+  const handleButtonClick = useCallback(() => {
     let selectedIndex = valueRef.current?.selectedIndex;
     let selectedOptionText;
     if (selectedIndex !== undefined) {
@@ -68,18 +63,13 @@ export const AddToArchiveModal: React.FC<AddToArchiveModalTypes> = ({
         attentionSecondPart
       );
     }
-  };
+  }, [isModalActive, setActive, t.archive.exist1, t.archive.exist2, year]);
   const valueRef = useRef<HTMLSelectElement>(null);
 
   return (
     <Modal active={isModalActive} setActive={setActive}>
       <div className='inputs-container'>
-        <MonthSelector
-          language={language}
-          saveToLocal={false}
-          onChange={handleMonthChange}
-          ref={valueRef}
-        />
+        <MonthSelector language={language} saveToLocal={false} ref={valueRef} />
         <Input
           value={year}
           onChange={handleYear}
@@ -91,9 +81,7 @@ export const AddToArchiveModal: React.FC<AddToArchiveModalTypes> = ({
         spanRef={spanRef}
         onClick={toggleExchange}
         title={t.income.total}
-        isNightShift={isNightShift}
-        daySalary={dayShiftSalaryResult.salary}
-        nightSalary={nightShiftSalaryResult.salary}
+        salaryResult={salaryResult.salary}
         picture={true}
         exchange={exchange}
         pointer={true}
@@ -101,4 +89,4 @@ export const AddToArchiveModal: React.FC<AddToArchiveModalTypes> = ({
       <Button name={name} onClick={handleButtonClick} />
     </Modal>
   );
-};
+});

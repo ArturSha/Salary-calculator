@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
 import { Result } from '../result/Result';
 import { SalaryData } from '../../calcFunctions/getDayShiftSalary';
@@ -8,8 +8,7 @@ interface ResultsType {
   language: string;
   isNightShift: boolean;
   baseForDayShift: number;
-  dayShiftSalaryResult: SalaryData;
-  nightShiftSalaryResult: SalaryData;
+  salaryResult: SalaryData;
   addTax: boolean;
   exchange: boolean;
   exRate: Partial<{ loading: boolean; usRate: number }>;
@@ -19,20 +18,20 @@ interface ResultsType {
   toggleExchange: () => void;
 }
 
-export const Results: React.FC<ResultsType> = ({
-  language,
-  isNightShift,
-  baseForDayShift,
-  dayShiftSalaryResult,
-  nightShiftSalaryResult,
-  addTax,
-  exchange,
-  exRate,
-  taxRate,
-  tax,
-  toggleExchange,
-  toggleTaxRate,
-}) => {
+export const Results = memo((props: ResultsType) => {
+  const {
+    language,
+    isNightShift,
+    baseForDayShift,
+    salaryResult,
+    addTax,
+    exchange,
+    exRate,
+    taxRate,
+    tax,
+    toggleExchange,
+    toggleTaxRate,
+  } = props;
   let { t } = useTranslations({ language });
 
   return (
@@ -47,30 +46,22 @@ export const Results: React.FC<ResultsType> = ({
         ) : null}
         <Result
           title={t.income.base}
-          isNightShift={isNightShift}
-          daySalary={dayShiftSalaryResult.baseSalary}
-          nightSalary={nightShiftSalaryResult.baseSalary}
+          salaryResult={salaryResult.baseSalary}
           color='#6F75F2'
         />
         <Result
           title={t.income.extra}
-          isNightShift={isNightShift}
-          daySalary={dayShiftSalaryResult.extraSalary}
-          nightSalary={nightShiftSalaryResult.extraSalary}
+          salaryResult={salaryResult.extraSalary}
           color='#c24848'
         />
         <Result
           title={t.income.bonus}
-          isNightShift={isNightShift}
-          daySalary={dayShiftSalaryResult.bonus}
-          nightSalary={nightShiftSalaryResult.bonus}
+          salaryResult={salaryResult.bonus}
           color='#58c248'
         />
         <Result
           title={t.income.calls}
-          isNightShift={isNightShift}
-          daySalary={dayShiftSalaryResult.callsBonus}
-          nightSalary={nightShiftSalaryResult.callsBonus}
+          salaryResult={salaryResult.callsBonus}
           color='#b248c2'
         />
         {addTax ? (
@@ -79,9 +70,7 @@ export const Results: React.FC<ResultsType> = ({
         <Result
           onClick={toggleExchange}
           title={t.income.total}
-          isNightShift={isNightShift}
-          daySalary={dayShiftSalaryResult.salary}
-          nightSalary={nightShiftSalaryResult.salary}
+          salaryResult={salaryResult.salary}
           picture={true}
           exchange={exchange}
           pointer={true}
@@ -107,4 +96,4 @@ export const Results: React.FC<ResultsType> = ({
       </div>
     </div>
   );
-};
+});

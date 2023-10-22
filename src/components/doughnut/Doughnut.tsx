@@ -1,16 +1,14 @@
 import Chart from 'react-apexcharts';
 import './doughnut.css';
+
 interface DoughnutChartType {
   data: number[];
   theme: boolean;
   language: string;
 }
 
-export const DoughnutChart: React.FC<DoughnutChartType> = ({
-  data,
-  theme,
-  language,
-}) => {
+export const DoughnutChart = (props: DoughnutChartType) => {
+  const { data, theme, language } = props;
   return (
     <div className='contaner-doughnut'>
       <Chart

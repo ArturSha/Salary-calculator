@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import './checkbox.css';
 interface CheckboxType {
   onChange?: any;
@@ -7,7 +8,7 @@ interface CheckboxType {
   checked?: boolean;
 }
 
-export const Checkbox: React.FC<CheckboxType> = (props) => {
+export const Checkbox = memo((props: CheckboxType) => {
   return (
     <div className='checkbox-container'>
       <input
@@ -23,4 +24,4 @@ export const Checkbox: React.FC<CheckboxType> = (props) => {
       </label>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './button.css';
 
 interface ButtonTypes {
@@ -6,7 +6,8 @@ interface ButtonTypes {
   onClick: any;
   disabled?: boolean;
 }
-export const Button: React.FC<ButtonTypes> = ({ name, onClick, disabled }) => {
+export const Button = memo((props: ButtonTypes) => {
+  const { name, onClick, disabled } = props;
   return (
     <div className='container-button'>
       <button
@@ -18,4 +19,4 @@ export const Button: React.FC<ButtonTypes> = ({ name, onClick, disabled }) => {
       </button>
     </div>
   );
-};
+});

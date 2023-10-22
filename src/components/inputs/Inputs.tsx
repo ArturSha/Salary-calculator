@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Input } from '../input/Input';
 import { MonthSelector } from '../monthSelector/MonthSelector';
 import { useTranslations } from '../../hooks/useTranslations';
 import { MinutesToHourModal } from '../../pages/minutesToHourModal/MinutesToHourModal';
 import svgWatch from './watch.svg';
 import question from './question.svg';
-import './inputs.css';
 import { BonusModal } from '../../pages/bonusModal/BonusModal';
+import './inputs.css';
 
 interface InputsType {
   language: string;
@@ -25,22 +25,23 @@ interface InputsType {
   handleHours: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Inputs: React.FC<InputsType> = ({
-  rate,
-  language,
-  hours,
-  calls,
-  bonus,
-  isNightShift,
-  year,
-  handleHours,
-  handleCalls,
-  handleBlur,
-  handleBonus,
-  handleMonthChange,
-  handleRate,
-  handleYear,
-}) => {
+export const Inputs = memo((props: InputsType) => {
+  const {
+    rate,
+    language,
+    hours,
+    calls,
+    bonus,
+    isNightShift,
+    year,
+    handleHours,
+    handleCalls,
+    handleBlur,
+    handleBonus,
+    handleMonthChange,
+    handleRate,
+    handleYear,
+  } = props;
   let { t } = useTranslations({ language });
 
   const [isTimeToHourModalActive, setIsTimeToHourModalActive] =
@@ -48,13 +49,13 @@ export const Inputs: React.FC<InputsType> = ({
 
   const [isBonusModalActive, setIsBonusModalActive] = useState<boolean>(false);
 
-  const handleBonusModal = () => {
+  const handleBonusModal = useCallback(() => {
     setIsBonusModalActive(!isBonusModalActive);
-  };
+  }, [isBonusModalActive]);
 
-  const handleTimeModal = () => {
+  const handleTimeModal = useCallback(() => {
     setIsTimeToHourModalActive(!isTimeToHourModalActive);
-  };
+  }, [isTimeToHourModalActive]);
 
   return (
     <div className='container-parameters-inputs'>
@@ -73,14 +74,11 @@ export const Inputs: React.FC<InputsType> = ({
         label={t.parameters.totalHours}
         type='number'
         min='0'
-        modal={
-          <img
-            onClick={handleTimeModal}
-            className='container-parameters-modal__svg-btn'
-            src={svgWatch}
-            alt='btn watch'
-          />
-        }
+        modal={true}
+        modalSrc={svgWatch}
+        modalOnClick={handleTimeModal}
+        modalAlt='button'
+        modalClassName='container-parameters-modal__svg-btn'
       />
       <Input
         value={calls}
@@ -95,25 +93,26 @@ export const Inputs: React.FC<InputsType> = ({
         onChange={handleBonus}
         label={t.parameters.bonus}
         type='number'
-        modal={
-          <img
-            onClick={handleBonusModal}
-            className='container-parameters-modal__svg-btn'
-            src={question}
-            alt='btn watch'
-          />
-        }
+        modal={true}
+        modalSrc={question}
+        modalClassName='container-parameters-modal__svg-btn'
+        modalAlt='button'
+        modalOnClick={handleBonusModal}
       />
-      <BonusModal
-        isModalActive={isBonusModalActive}
-        language={language}
-        setActive={handleBonusModal}
-      />
-      <MinutesToHourModal
-        isModalActive={isTimeToHourModalActive}
-        language={language}
-        setActive={handleTimeModal}
-      />
+      {isBonusModalActive && (
+        <BonusModal
+          isModalActive={isBonusModalActive}
+          language={language}
+          setActive={handleBonusModal}
+        />
+      )}
+      {isTimeToHourModalActive && (
+        <MinutesToHourModal
+          isModalActive={isTimeToHourModalActive}
+          language={language}
+          setActive={handleTimeModal}
+        />
+      )}
 
       {!isNightShift ? (
         <>
@@ -128,4 +127,4 @@ export const Inputs: React.FC<InputsType> = ({
       ) : null}
     </div>
   );
-};
+});

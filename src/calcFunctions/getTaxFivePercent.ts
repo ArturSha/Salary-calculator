@@ -5,7 +5,6 @@ export const getFivePercent = (
   exchange: boolean
 ) => {
   let newTotal: number = +total.toFixed(2);
-
   if (five && !exchange) {
     const result = newTotal * exchangeRate * 0.05;
     return result ? Math.ceil(result * 10) / 10 : '0.000';
