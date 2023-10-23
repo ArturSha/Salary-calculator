@@ -165,58 +165,67 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
     setYear(value);
   }, []);
 
-  const salaryResult = useMemo(() => {
-    if (isNightShift) {
-      return countSalary({
-        rate,
-        hours,
-        bonus,
-        calls,
-        addTax,
-        exRate,
-        exchange,
-      });
-    }
-    return countDaySalary({
-      baseForDayShift,
-      rate,
-      hours,
-      bonus,
-      calls,
-      addTax,
-      exRate,
-      exchange,
-    });
-  }, [
-    addTax,
-    baseForDayShift,
-    bonus,
-    calls,
-    exRate,
-    exchange,
-    hours,
-    isNightShift,
-    rate,
-  ]);
-
-  const salaryTotal = salaryResult.salary;
-
-  const tax = getFivePercent(salaryTotal, exRate.usRate, taxRate, exchange);
-
   const handleMonthChange = useCallback((value: number) => {
     const selectedMonth = String(value);
     setMonth(selectedMonth);
   }, []);
 
-  const getAllData = [
-    Number(salaryResult.baseSalary.toFixed(2)),
-    Number(salaryResult.extraSalary.toFixed(2)),
-    Number(salaryResult.bonus.toFixed(2)),
-    Number(salaryResult.callsBonus.toFixed(2)),
-    Number(salaryResult.ssb.toFixed(2)),
-  ];
+  const salaryResult = useMemo(() => {
+    if (isNightShift) {
+      return countSalary({
+        addTax,
+        rate,
+        hours,
+        bonus,
+        calls,
+        exRate,
+        exchange,
+      });
+    }
+    return countDaySalary({
+      addTax,
+      rate,
+      hours,
+      bonus,
+      calls,
+      exRate,
+      exchange,
+      baseForDayShift,
+    });
+  }, [
+    addTax,
+    rate,
+    hours,
+    bonus,
+    calls,
+    exRate,
+    exchange,
+    isNightShift,
+    baseForDayShift,
+  ]);
 
-  const dataForDoughnut = [getAllData];
+  const tax = getFivePercent(
+    salaryResult.salary,
+    exRate.usRate,
+    taxRate,
+    exchange
+  );
+
+  const dataForDoughnut = useMemo(() => {
+    return [
+      Number(salaryResult.baseSalary.toFixed(2)),
+      Number(salaryResult.extraSalary.toFixed(2)),
+      Number(salaryResult.bonus.toFixed(2)),
+      Number(salaryResult.callsBonus.toFixed(2)),
+      Number(salaryResult.ssb.toFixed(2)),
+    ];
+  }, [
+    salaryResult.baseSalary,
+    salaryResult.bonus,
+    salaryResult.callsBonus,
+    salaryResult.extraSalary,
+    salaryResult.ssb,
+  ]);
 
   return (
     <div className='container'>
@@ -264,11 +273,8 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         <Button name={t.button.button} onClick={toggleModal} />
       </div>
 
-      <DoughnutChart
-        language={language}
-        data={dataForDoughnut[0]}
-        theme={theme}
-      ></DoughnutChart>
+      <DoughnutChart language={language} data={dataForDoughnut} theme={theme} />
+
       {isArchiveModalActive && (
         <AddToArchiveModal
           name={t.button.button}

@@ -1,4 +1,5 @@
 import Chart from 'react-apexcharts';
+import { memo } from 'react';
 import './doughnut.css';
 
 interface DoughnutChartType {
@@ -7,7 +8,7 @@ interface DoughnutChartType {
   language: string;
 }
 
-export const DoughnutChart = (props: DoughnutChartType) => {
+export const DoughnutChart = memo((props: DoughnutChartType) => {
   const { data, theme, language } = props;
   return (
     <div className='contaner-doughnut'>
@@ -86,4 +87,4 @@ export const DoughnutChart = (props: DoughnutChartType) => {
       />
     </div>
   );
-};
+});
