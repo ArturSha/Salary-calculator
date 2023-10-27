@@ -87,12 +87,6 @@ export const Input = memo((props: InputType) => {
             onClick={modalOnClick}
           />
         )}
-        {/* <img
-            onClick={handleBonusModal}
-            className='container-parameters-modal__svg-btn'
-            src={question}
-            alt='btn watch'
-          /> */}
       </label>
     </div>
   );

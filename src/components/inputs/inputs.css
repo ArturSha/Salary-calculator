@@ -10,3 +10,7 @@
   top: -4px;
   cursor: pointer;
 }
+
+.container-parameters-modal__svg-btn:hover {
+  opacity: 0.7;
+}

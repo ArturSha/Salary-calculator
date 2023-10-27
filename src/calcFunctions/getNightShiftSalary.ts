@@ -5,7 +5,7 @@ interface CountSalaryArg {
   hours: string;
   bonus: string;
   calls: string;
-  addTax: boolean;
+  addSSP: boolean;
   exRate: { loading: boolean; usRate: number };
   exchange: boolean;
 }
@@ -55,7 +55,7 @@ export const countSalary = (data: CountSalaryArg): SalaryData => {
   const callsBonus = baseSalary * 0.3 * calls;
   let salary = baseSalary + extraSalary + bonus + callsBonus;
   let ssb = 0;
-  if (data.addTax) {
+  if (data.addSSP) {
     ssb = 43;
     salary += ssb;
   }

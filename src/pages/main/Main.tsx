@@ -29,7 +29,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   const [month, setMonth] = useState<string>('0');
   const [isNightShift, setIsNightShift] = useState<boolean>(false);
   const [taxRate, setTaxRate] = useState<boolean>(true);
-  const [addTax, setAddTax] = useState<boolean>(false);
+  const [addSSP, setAddTax] = useState<boolean>(false);
   const [exRate, setExRate] = useState({ loading: false, usRate: 0 });
   const [exchange, setExchange] = useState<boolean>(false);
   const [isArchiveModalActive, setIsArchiveModalActive] = useState(false);
@@ -77,10 +77,10 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   }, [isArchiveModalActive]);
 
   const toggleTax = useCallback(() => {
-    setAddTax((addTax) => !addTax);
-    const value = !addTax;
+    setAddTax((addSSP) => !addSSP);
+    const value = !addSSP;
     saveToLocalStorage('parameters', 'tax', value);
-  }, [addTax]);
+  }, [addSSP]);
 
   const toggleTaxRate = useCallback(() => {
     setTaxRate((taxRate) => !taxRate);
@@ -173,7 +173,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   const salaryResult = useMemo(() => {
     if (isNightShift) {
       return countSalary({
-        addTax,
+        addSSP,
         rate,
         hours,
         bonus,
@@ -183,7 +183,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       });
     }
     return countDaySalary({
-      addTax,
+      addSSP,
       rate,
       hours,
       bonus,
@@ -193,7 +193,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       baseForDayShift,
     });
   }, [
-    addTax,
+    addSSP,
     rate,
     hours,
     bonus,
@@ -250,7 +250,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
           />
 
           <Checkboxes
-            addTax={addTax}
+            addTax={addSSP}
             isNightShift={isNightShift}
             language={language}
             toggleTax={toggleTax}
@@ -262,7 +262,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
           isNightShift={isNightShift}
           baseForDayShift={baseForDayShift}
           salaryResult={salaryResult}
-          addTax={addTax}
+          addSSP={addSSP}
           exchange={exchange}
           exRate={exRate}
           taxRate={taxRate}
@@ -273,7 +273,12 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         <Button name={t.button.button} onClick={toggleModal} />
       </div>
 
-      <DoughnutChart language={language} data={dataForDoughnut} theme={theme} />
+      <DoughnutChart
+        language={language}
+        data={dataForDoughnut}
+        theme={theme}
+        addSSP={addSSP}
+      />
 
       {isArchiveModalActive && (
         <AddToArchiveModal

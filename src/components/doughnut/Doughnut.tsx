@@ -6,10 +6,12 @@ interface DoughnutChartType {
   data: number[];
   theme: boolean;
   language: string;
+  addSSP: boolean;
 }
 
 export const DoughnutChart = memo((props: DoughnutChartType) => {
-  const { data, theme, language } = props;
+  const { data, theme, language, addSSP } = props;
+
   return (
     <div className='contaner-doughnut'>
       <Chart
@@ -27,20 +29,38 @@ export const DoughnutChart = memo((props: DoughnutChartType) => {
           },
           labels:
             language === 'en-US'
-              ? ['Base', 'Extra', 'Bonus/Vacation', 'Calls', 'SSP']
+              ? [
+                  'Base',
+                  'Extra',
+                  'Bonus/Vacation',
+                  'Calls',
+                  `${addSSP ? 'SSP' : ''}`,
+                ]
               : [
                   'Базовая ставка',
                   'Экстра',
                   'Бонус/Отпускные',
                   'Бонус за звонки',
-                  'ЕСВ',
+                  `${addSSP ? 'ЕСВ' : ''}`,
                 ],
-          colors: ['#6F75F2', '#c24848', '#58c248', '#b248c2', '#c2a748'],
+          colors: [
+            '#6F75F2',
+            '#c24848',
+            '#58c248',
+            '#b248c2',
+            `${addSSP ? '#c2a748' : ''}`,
+          ],
           grid: {
             borderColor: '#F67E7E',
           },
           stroke: {
-            colors: ['#6F75F2', '#c24848', '#58c248', '#b248c2', '#c2a748'],
+            colors: [
+              '#6F75F2',
+              '#c24848',
+              '#58c248',
+              '#b248c2',
+              `${addSSP ? '#c2a748' : ''}`,
+            ],
           },
 
           plotOptions: {

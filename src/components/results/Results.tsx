@@ -9,7 +9,7 @@ interface ResultsType {
   isNightShift: boolean;
   baseForDayShift: number;
   salaryResult: SalaryData;
-  addTax: boolean;
+  addSSP: boolean;
   exchange: boolean;
   exRate: Partial<{ loading: boolean; usRate: number }>;
   taxRate: boolean;
@@ -24,7 +24,7 @@ export const Results = memo((props: ResultsType) => {
     isNightShift,
     baseForDayShift,
     salaryResult,
-    addTax,
+    addSSP,
     exchange,
     exRate,
     taxRate,
@@ -64,7 +64,7 @@ export const Results = memo((props: ResultsType) => {
           salaryResult={salaryResult.callsBonus}
           color='#b248c2'
         />
-        {addTax ? (
+        {addSSP ? (
           <Result title={t.income.SSP} tax='43' color='#c2a748' />
         ) : null}
         <Result
