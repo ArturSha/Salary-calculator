@@ -62,6 +62,7 @@ export const Taxes = memo(({ language, onResultChange, i }: TaxesProps) => {
           label={t.taxes.labelDay}
           type='date'
           max={getCurrentDateForInput()}
+          scroll={false}
         />
         <Input
           value={amount}

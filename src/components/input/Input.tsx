@@ -15,6 +15,7 @@ interface InputType {
   modalSrc?: string;
   modalAlt?: string;
   modalOnClick?: () => void;
+  scroll?: boolean;
 }
 
 export const Input = memo((props: InputType) => {
@@ -32,40 +33,43 @@ export const Input = memo((props: InputType) => {
     modalOnClick,
     modalSrc,
     modalAlt,
+    scroll = true,
   } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const currentRed = inputRef.current;
-    const handleWheel = (event: WheelEvent) => {
-      if (currentRed && currentRed.contains(event.target as Node)) {
-        event.preventDefault();
-        const inputStep = parseFloat(step || '1');
-        const currentValue = parseFloat(value) || 0;
-        if (event.deltaY > 0) {
-          onChange({
-            target: { value: (currentValue - inputStep).toString() },
-          } as React.ChangeEvent<HTMLInputElement>);
-        } else if (event.deltaY < 0) {
-          onChange({
-            target: { value: (currentValue + inputStep).toString() },
-          } as React.ChangeEvent<HTMLInputElement>);
+    if (scroll) {
+      const currentRef = inputRef.current;
+      const handleWheel = (event: WheelEvent) => {
+        if (currentRef && currentRef.contains(event.target as Node)) {
+          event.preventDefault();
+          const inputStep = parseFloat(step || '1');
+          const currentValue = parseFloat(value) || 0;
+          if (event.deltaY > 0) {
+            onChange({
+              target: { value: (currentValue - inputStep).toString() },
+            } as React.ChangeEvent<HTMLInputElement>);
+          } else if (event.deltaY < 0) {
+            onChange({
+              target: { value: (currentValue + inputStep).toString() },
+            } as React.ChangeEvent<HTMLInputElement>);
+          }
         }
-      }
-    };
+      };
 
-    if (currentRed) {
-      currentRed.addEventListener('wheel', handleWheel, {
-        passive: false,
-      });
+      if (currentRef) {
+        currentRef.addEventListener('wheel', handleWheel, {
+          passive: false,
+        });
+      }
+
+      return () => {
+        if (currentRef) {
+          currentRef.removeEventListener('wheel', handleWheel);
+        }
+      };
     }
-
-    return () => {
-      if (currentRed) {
-        currentRed.removeEventListener('wheel', handleWheel);
-      }
-    };
-  }, [onChange, step, value]);
+  }, [onChange, scroll, step, value]);
 
   return (
     <div className='input-container'>

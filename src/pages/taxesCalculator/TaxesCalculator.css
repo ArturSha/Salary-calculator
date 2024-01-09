@@ -11,6 +11,11 @@
     cursor: pointer;
     width: 64px;
     height: 64px;
+    transition: .4s;
+  }
+
+  .addComponent:hover {
+    opacity: 0.7;
   }
 
   .totalAmount {
