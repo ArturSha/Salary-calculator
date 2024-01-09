@@ -5,6 +5,7 @@ import { saveToLocalStorage } from './helpers/saveToLocal';
 import { getValueFromLocalStorage } from './helpers/getFromLocal';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Archive } from './pages/archive/Archive';
+import { TaxesCalculator } from './pages/taxesCalculator/TaxesCalculator';
 
 const getBody = document.querySelector('body') as HTMLBodyElement;
 
@@ -59,6 +60,10 @@ function App() {
           <Route
             path='/archive'
             element={<Archive language={language} />}
+          ></Route>
+          <Route
+            path='/taxes'
+            element={<TaxesCalculator language={language} />}
           ></Route>
           <Route
             path='*'

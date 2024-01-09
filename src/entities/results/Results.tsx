@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { useTranslations } from '../../hooks/useTranslations';
-import { Result } from '../result/Result';
+import { Result } from '../../components/result/Result';
 import { SalaryData } from '../../calcFunctions/getDayShiftSalary';
 import './results.css';
 

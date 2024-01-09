@@ -5,7 +5,9 @@
     "themeOn": "ON",
     "themeOff": "OFF",
     "calculator": "Calculator",
-    "archive": "Archive"
+    "archive": "Archive",
+    "taxes": "Taxes"
+
   },
   "parameters": {
     "parameters": "Parameters",
@@ -69,5 +71,13 @@
     "constitutionDay": "Constitution day",
     "independenceDay": "Independence day",
     "christmas": "Christmas"
+  },
+  "taxes": {
+    "labelDay": "Pick a date",
+    "labelAmount": "Amount $",
+    "rate": "Exchange rate:",
+    "toPay": "5% Tax:",
+    "currency": " ₴",
+    "totalAmount": "Total amount: "
   }
 }

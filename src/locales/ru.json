@@ -5,7 +5,9 @@
     "themeOn": "|",
     "themeOff": "O",
     "calculator": "Калькулятор",
-    "archive": "Архив"
+    "archive": "Архив",
+    "taxes": "Налоги"
+
   },
   "parameters": {
     "parameters": "Параметры",
@@ -69,5 +71,15 @@
     "constitutionDay": "День Конституции",
     "independenceDay": "День Независимости",
     "christmas": "Рождество"
+  },
+  "taxes": {
+    "labelDay": "Выберите дату",
+    "labelAmount": "Сумма $",
+    "rate": "Курс:",
+    "toPay": "5% Налог:",
+    "currency": " ₴",
+    "totalAmount": "Итоговая сумма: "
+
+
   }
 }

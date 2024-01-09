@@ -1,0 +1,39 @@
+.container-taxes:not(:first-child) {
+margin-top:12px ;
+}
+
+.container-taxes {
+  width: 386px;
+}
+
+.container-tax { 
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 4px;
+  margin-top: 8px;
+}
+
+.currencyRate {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+  width: 100%;
+  border-bottom: 1px solid #9d9d9d;
+  max-height: 28px;
+}
+
+@media (max-width: 386px) {
+  .currencyRate {
+    padding-top: 0px;
+
+  }
+
+  .container-taxes {
+    width: auto;
+  }
+}

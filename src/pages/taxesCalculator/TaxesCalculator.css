@@ -1,0 +1,30 @@
+.taxes {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .addComponent{
+    margin: 16px 0;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+  }
+
+  .totalAmount {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+    width: 100%;
+    border-bottom: 1px solid #9d9d9d;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 386px) {
+
+    .totalAmount {
+      width: 200px;
+    }
+  }

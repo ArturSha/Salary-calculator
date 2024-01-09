@@ -56,6 +56,13 @@ export const Header: React.FC<HeaderType> = ({
           end
         >
           {t.header.archive}
+        </NavLink>{' '}
+        <NavLink
+          className={({ isActive }) => (isActive ? 'link active' : 'link')}
+          to={'/taxes'}
+          end
+        >
+          {t.header.taxes}
         </NavLink>
       </nav>
     </header>

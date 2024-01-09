@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Input } from '../input/Input';
-import { MonthSelector } from '../monthSelector/MonthSelector';
+import { Input } from '../../components/input/Input';
+import { MonthSelector } from '../../components/monthSelector/MonthSelector';
 import { useTranslations } from '../../hooks/useTranslations';
 import { MinutesToHourModal } from '../../pages/minutesToHourModal/MinutesToHourModal';
 import svgWatch from './watch.svg';

@@ -9,6 +9,7 @@ interface InputType {
   label: string;
   type: string;
   min?: string;
+  max?: string;
   modal?: boolean;
   modalClassName?: string;
   modalSrc?: string;
@@ -23,6 +24,7 @@ export const Input = memo((props: InputType) => {
     type,
     value,
     min,
+    max,
     modal,
     onBlur,
     step,
@@ -71,6 +73,7 @@ export const Input = memo((props: InputType) => {
         {label}
         <input
           min={min}
+          max={max}
           className='input'
           type={type}
           step={step}

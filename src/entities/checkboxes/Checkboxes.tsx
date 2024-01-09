@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Checkbox } from '../checkbox/Checkbox';
+import { Checkbox } from '../../components/checkbox/Checkbox';
 import { useTranslations } from '../../hooks/useTranslations';
 import './checkboxes.css';
 

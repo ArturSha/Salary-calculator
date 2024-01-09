@@ -34,6 +34,10 @@ input[type='number'] {
 input:focus {
   outline: none;
 }
+input[type="date"] {
+ width: 180px;
+ height: 34px;
+}
 
 /* LABEL ======================================= */
 label {
