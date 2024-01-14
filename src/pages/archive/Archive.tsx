@@ -14,8 +14,7 @@ interface ArchiveTypes {
 
 export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
   const [salary, setSalary] = useState<Root>([]);
-  const { mouseY, direction, handleMouseMove } = useMousePosition();
-  console.log(mouseY);
+  const { direction, handleMouseMove } = useMousePosition();
 
   let { t } = useTranslations({ language });
 
