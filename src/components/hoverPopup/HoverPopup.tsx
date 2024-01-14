@@ -11,8 +11,8 @@ interface HoverPopupProps {
   rate: string;
   totalHours: string;
   callsBonus: string;
-  baseSalary: string;
-  extraSalary: string;
+  baseSalary: number;
+  extraSalary: number;
 }
 
 export const HoverPopup = memo(

@@ -16,6 +16,6 @@ export interface Month {
   salary: string;
   totalHours: string;
   callsBonus: string;
-  baseSalary: string;
-  extraSalary: string;
+  baseSalary: number;
+  extraSalary: number;
 }

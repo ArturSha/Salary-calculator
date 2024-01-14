@@ -12,10 +12,10 @@ export const saveToLocalArchive = (
   callsBonus: string,
   rate: string,
   baseForDayShift: number | null,
-  bonus: number,
+  bonus: string,
   bonusHours: string,
-  baseSalary: number,
-  extraSalary: number
+  baseSalary: string,
+  extraSalary: string
 ) => {
   const savedData = localStorage.getItem('archive');
   const parsedData = savedData ? JSON.parse(savedData) : [];
