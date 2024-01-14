@@ -73,13 +73,13 @@ export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
         attentionSecondPart,
         totalHours,
         calls,
-        salaryResult.callsBonus.toFixed(0),
+        salaryResult.callsBonus.toFixed(1),
         rate,
         baseForDayShift,
-        salaryResult.bonus.toFixed(0),
+        salaryResult.bonus.toFixed(1),
         bonusHours,
-        salaryResult.baseSalary.toFixed(0),
-        salaryResult.extraSalary.toFixed(0)
+        salaryResult.baseSalary.toFixed(1),
+        salaryResult.extraSalary.toFixed(1)
       );
     }
   }, [
