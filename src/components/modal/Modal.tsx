@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import './modal.css';
 
 interface ModalTypes {
@@ -9,16 +9,35 @@ interface ModalTypes {
 
 export const Modal = memo((props: ModalTypes) => {
   const { active, setActive, children } = props;
-  const handleClick = useCallback(() => {
+
+  const handleClose = useCallback(() => {
     setActive(false);
   }, [setActive]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && active) {
+        handleClose();
+      }
+    },
+    [active, handleClose]
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   return (
-    <div onClick={handleClick} className={active ? 'modal active' : 'modal'}>
+    <div onClick={handleClose} className={active ? 'modal active' : 'modal'}>
       <div
         onClick={(e) => e.stopPropagation()}
         className={active ? 'modal__content active' : 'modal__content'}
       >
-        <span onClick={handleClick} className='close__button'>
+        <span onClick={handleClose} className='close__button'>
           &times;
         </span>
         {children}
