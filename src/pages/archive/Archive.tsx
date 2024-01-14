@@ -5,6 +5,8 @@ import { useTranslations } from '../../hooks/useTranslations';
 import { Button } from '../../components/button/Button';
 import { Month, Root, Root2 } from './archiveTypes';
 import './archive.css';
+import { HoverPopup } from '../../components/hoverPopup/HoverPopup';
+import { useMousePosition } from '../../hooks/useMousePosition';
 
 interface ArchiveTypes {
   language: string;
@@ -12,6 +14,8 @@ interface ArchiveTypes {
 
 export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
   const [salary, setSalary] = useState<Root>([]);
+  const { mouseY, direction, handleMouseMove } = useMousePosition();
+  console.log(mouseY);
 
   let { t } = useTranslations({ language });
 
@@ -95,7 +99,25 @@ export const Archive: React.FC<ArchiveTypes> = ({ language }) => {
               </h2>
               <ul>
                 {item.months.map((month: Month, monthIndex: number) => (
-                  <li className='archive-salary-item' key={monthIndex}>
+                  <li
+                    onMouseMove={handleMouseMove}
+                    className='archive-salary-item'
+                    key={monthIndex}
+                  >
+                    <HoverPopup
+                      baseHours={month.baseHours}
+                      bonus={month.bonus}
+                      bonusHours={month.bonusHours}
+                      callsRate={month.callsRate}
+                      rate={month.rate}
+                      totalHours={month.totalHours}
+                      direction={direction}
+                      language={language}
+                      callsBonus={month.callsBonus}
+                      baseSalary={month.baseSalary}
+                      extraSalary={month.extraSalary}
+                    />
+
                     <span>{month.month}:</span>
                     <span>{month.salary.toLocaleString()}</span>
                     <img

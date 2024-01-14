@@ -14,8 +14,12 @@ interface AddToArchiveModalTypes {
   language: string;
   isModalActive: boolean;
   exchange: boolean;
-  isNightShift: boolean;
   salaryResult: SalaryData;
+  totalHours: string;
+  bonusHours: string;
+  calls: string;
+  rate: string;
+  baseForDayShift: number | null;
 
   setActive: (arg: boolean) => void;
   toggleExchange: () => void;
@@ -28,6 +32,11 @@ export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
     language,
     exchange,
     salaryResult,
+    totalHours,
+    bonusHours,
+    calls,
+    rate,
+    baseForDayShift,
     setActive,
     toggleExchange,
   } = props;
@@ -41,6 +50,7 @@ export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
   let { t } = useTranslations({ language });
 
   const spanRef: RefObject<HTMLSpanElement> = useRef(null);
+
   const handleButtonClick = useCallback(() => {
     let selectedIndex = valueRef.current?.selectedIndex;
     let selectedOptionText;
@@ -60,10 +70,34 @@ export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
         selectedIndex,
         salary,
         attentionFirstPart,
-        attentionSecondPart
+        attentionSecondPart,
+        totalHours,
+        calls,
+        salaryResult.callsBonus.toFixed(0),
+        rate,
+        baseForDayShift,
+        salaryResult.bonus,
+        bonusHours,
+        salaryResult.baseSalary,
+        salaryResult.extraSalary
       );
     }
-  }, [isModalActive, setActive, t.archive.exist1, t.archive.exist2, year]);
+  }, [
+    baseForDayShift,
+    bonusHours,
+    calls,
+    isModalActive,
+    rate,
+    salaryResult.baseSalary,
+    salaryResult.bonus,
+    salaryResult.callsBonus,
+    salaryResult.extraSalary,
+    setActive,
+    t.archive.exist1,
+    t.archive.exist2,
+    totalHours,
+    year,
+  ]);
   const valueRef = useRef<HTMLSelectElement>(null);
 
   return (

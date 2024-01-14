@@ -6,7 +6,16 @@ export interface Root2 {
 }
 
 export interface Month {
-  month: string;
-  salary: string;
+  baseHours: number | null;
+  bonus: number;
+  bonusHours: string;
+  callsRate: string;
   index: number;
+  month: string;
+  rate: string;
+  salary: string;
+  totalHours: string;
+  callsBonus: string;
+  baseSalary: string;
+  extraSalary: string;
 }

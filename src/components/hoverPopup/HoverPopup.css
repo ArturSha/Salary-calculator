@@ -1,0 +1,25 @@
+.hoverPopup {
+    display: none;
+    position: absolute;
+    padding: 10px;   
+    width: 230px;
+    pointer-events: none;
+    z-index: 1;
+    border: 1px solid #62b1db;
+    background-color: white;
+
+}
+
+#dark .hoverPopup {
+    background-color: #2a3035;
+    border: 1px solid goldenrod;
+
+}
+
+.top {
+    top: 20px;
+}
+
+.bottom {
+    bottom: 28px;
+}

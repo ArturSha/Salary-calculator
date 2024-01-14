@@ -286,8 +286,12 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
           isModalActive={isArchiveModalActive}
           language={language}
           exchange={exchange}
-          isNightShift={isNightShift}
           salaryResult={salaryResult}
+          totalHours={hours}
+          bonusHours={bonus}
+          calls={calls}
+          rate={rate}
+          baseForDayShift={isNightShift ? null : baseForDayShift}
           setActive={setIsArchiveModalActive}
           toggleExchange={toggleExchange}
         />

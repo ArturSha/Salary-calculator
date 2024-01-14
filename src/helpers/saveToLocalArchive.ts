@@ -6,7 +6,16 @@ export const saveToLocalArchive = (
   selectedIndex: number | undefined,
   salary: string,
   attentionFirst: string,
-  attentionSecond: string
+  attentionSecond: string,
+  totalHours: string,
+  calls: string,
+  callsBonus: string,
+  rate: string,
+  baseForDayShift: number | null,
+  bonus: number,
+  bonusHours: string,
+  baseSalary: number,
+  extraSalary: number
 ) => {
   const savedData = localStorage.getItem('archive');
   const parsedData = savedData ? JSON.parse(savedData) : [];
@@ -27,14 +36,32 @@ export const saveToLocalArchive = (
         `${attentionFirst} ${selectedMonth} ${attentionSecond}`
       );
       if (exist) {
-        updateArchive[existingYearIndex].months[existingMonthIndex].salary =
-          salary;
+        const currentMonth =
+          updateArchive[existingYearIndex].months[existingMonthIndex];
+        currentMonth.salary = salary;
+        currentMonth.bonus = bonus;
+        currentMonth.bonusHours = bonusHours;
+        currentMonth.totalHours = totalHours;
+        currentMonth.callsRate = calls;
+        currentMonth.rate = rate;
+        currentMonth.baseHours = baseForDayShift;
+        currentMonth.callsBonus = callsBonus;
+        currentMonth.baseSalary = baseSalary;
+        currentMonth.extraSalary = extraSalary;
       }
     } else {
       updateArchive[existingYearIndex].months.push({
         month: selectedMonth,
         salary: salary,
         index: selectedIndex,
+        totalHours: totalHours,
+        bonus: bonus,
+        rate: rate,
+        callsRate: calls,
+        bonusHours: bonusHours,
+        callsBonus: callsBonus,
+        baseSalary: baseSalary,
+        extraSalary: extraSalary,
       });
       updateArchive[existingYearIndex].months?.sort(
         (a: Month, b: Month) => a.index - b.index
@@ -48,6 +75,14 @@ export const saveToLocalArchive = (
           month: selectedMonth,
           salary: salary,
           index: selectedIndex,
+          totalHours: totalHours,
+          bonus: bonus,
+          rate: rate,
+          callsRate: calls,
+          bonusHours: bonusHours,
+          callsBonus: callsBonus,
+          baseSalary: baseSalary,
+          extraSalary: extraSalary,
         },
       ],
     };

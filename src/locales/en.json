@@ -52,7 +52,14 @@
   "archive": {
     "total": "Total:",
     "exist1": "Attention! The month",
-    "exist2": "already exists. Saving again may overwrite the existing data."
+    "exist2": "already exists. Saving again may overwrite the existing data.",
+    "totalHours": "Total Hours: ",
+    "baseHours": "Base Hours: ",
+    "bonus": "Bonus/Vacation: ",
+    "hrs": " h.",
+    "rate": "Rate: ",
+    "calls": "Calls: ",
+    "baseAndExtra": "Base and Extra: "
   },
   "modalCalc": {
     "title": "Convert minutes into hours",

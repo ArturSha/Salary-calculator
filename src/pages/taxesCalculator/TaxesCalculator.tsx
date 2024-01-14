@@ -40,6 +40,7 @@ export const TaxesCalculator = ({ language }: TaxesCalculatorProps) => {
   const totalToFixed = total
     .reduce((acc, current) => acc + current, 0)
     .toFixed(3);
+
   return (
     <div className='taxes'>
       {components}

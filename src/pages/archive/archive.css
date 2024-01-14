@@ -20,6 +20,10 @@
   border-bottom: 1px solid #9d9d9d;
 }
 
+.archive-salary-item:hover .hoverPopup {
+  display: block;
+}
+
 .delete__button {
   opacity: 0;
   cursor: pointer;

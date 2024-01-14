@@ -1,4 +1,4 @@
-export const getWorkingDaysOfMonth = (year: number, month: number) => {
+export const getWorkingDaysOfMonth = (year: number, month: number): number => {
   const startDate = new Date(year, month, 1);
   const endDate = new Date(year, month + 1, 0);
   let workingDays = 0;
