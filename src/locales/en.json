@@ -80,7 +80,7 @@
     "christmas": "Christmas"
   },
   "taxes": {
-    "labelDay": "Pick a date",
+    "pickDate": "Pick a date",
     "labelAmount": "Amount $",
     "rate": "Exchange rate:",
     "toPay": "5% Tax:",

@@ -81,7 +81,7 @@
     "christmas": "Рождество"
   },
   "taxes": {
-    "labelDay": "Выберите дату",
+    "pickDate": "Выберите дату",
     "labelAmount": "Сумма $",
     "rate": "Курс:",
     "toPay": "5% Налог:",

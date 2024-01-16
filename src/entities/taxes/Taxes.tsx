@@ -13,7 +13,7 @@ interface TaxesProps {
 
 export const Taxes = memo(({ language, onResultChange, i }: TaxesProps) => {
   const [pickedDate, setPickedDate] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
+  const [amount, setAmount] = useState<string>('1');
   const [exRate, setExRate] = useState({ loading: false, usRate: 0 });
   const [roundedToPay, setRoundedToPay] = useState<number>(0);
 
@@ -47,11 +47,13 @@ export const Taxes = memo(({ language, onResultChange, i }: TaxesProps) => {
     }
   };
   useEffect(() => {
-    const toPay = Number(amount) * exRate.usRate * 0.05;
-    const roundedToPay = toPay.toFixed(4);
-    setRoundedToPay(Number(roundedToPay));
-    onResultChange(Number(roundedToPay), i);
-  }, [amount, exRate.usRate, i, onResultChange]);
+    if (exRate && exRate.usRate !== undefined) {
+      const toPay = Number(amount) * exRate.usRate * 0.05;
+      const roundedToPay = toPay.toFixed(4);
+      setRoundedToPay(Number(roundedToPay));
+      onResultChange(Number(roundedToPay), i);
+    }
+  }, [amount, exRate, i, onResultChange]);
 
   return (
     <div className='container-taxes'>
@@ -59,7 +61,7 @@ export const Taxes = memo(({ language, onResultChange, i }: TaxesProps) => {
         <Input
           value={pickedDate}
           onChange={inputDateHandler}
-          label={t.taxes.labelDay}
+          label={t.taxes.pickDate}
           type='date'
           max={getCurrentDateForInput()}
           scroll={false}
@@ -73,7 +75,7 @@ export const Taxes = memo(({ language, onResultChange, i }: TaxesProps) => {
         />
         <p className='currencyRate'>
           {t.taxes.rate}
-          <span> {exRate.loading ? t.income.loading : exRate.usRate} ₴</span>
+          <span>{exRate.loading ? t.income.loading : exRate.usRate} ₴</span>
         </p>
       </div>
       <div className='container-tax'>
