@@ -16,5 +16,10 @@ export const getWorkingDaysOfMonth = (year: number, month: number): number => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
+  // internal exceptions
+  if (year === 2024 && month === 0) {
+    return workingDays * 8 - 4;
+  }
+
   return workingDays * 8;
 };
