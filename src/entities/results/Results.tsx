@@ -65,7 +65,7 @@ export const Results = memo((props: ResultsType) => {
           color='#b248c2'
         />
         {addSSP ? (
-          <Result title={t.income.SSP} tax='43' color='#c2a748' />
+          <Result title={t.income.SSP} tax='45' color='#c2a748' />
         ) : null}
         <Result
           onClick={toggleExchange}
