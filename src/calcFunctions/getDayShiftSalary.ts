@@ -64,7 +64,7 @@ export const countDaySalary = (data: CountSalaryArg): SalaryData => {
   let salary = baseSalary + extraSalary + bonus + callsBonus;
   let ssb = 0;
   if (data.addSSP) {
-    ssb = 45;
+    ssb = 50;
     salary += ssb;
   }
 
