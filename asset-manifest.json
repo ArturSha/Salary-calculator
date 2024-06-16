@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Salary-calculator/static/css/main.446faef0.css",
-    "main.js": "/Salary-calculator/static/js/main.906104b4.js",
+    "main.css": "/Salary-calculator/static/css/main.edbdc3fd.css",
+    "main.js": "/Salary-calculator/static/js/main.e168026c.js",
     "static/js/498.71d2491c.chunk.js": "/Salary-calculator/static/js/498.71d2491c.chunk.js",
     "static/js/703.c2b9f0be.chunk.js": "/Salary-calculator/static/js/703.c2b9f0be.chunk.js",
     "static/js/258.efee7e81.chunk.js": "/Salary-calculator/static/js/258.efee7e81.chunk.js",
-    "static/media/watch.svg": "/Salary-calculator/static/media/watch.531a79e6844c7670ec6162596885970e.svg",
-    "static/media/bin.svg": "/Salary-calculator/static/media/bin.3fe6104b74a2099585d7efdaa39c7379.svg",
-    "static/media/question.svg": "/Salary-calculator/static/media/question.635dcd131ae7b0290f954001f6dc73f8.svg",
+    "static/media/watch.svg": "/Salary-calculator/static/media/watch.840528452beee66b4953ab51c25db0db.svg",
+    "static/media/bin.svg": "/Salary-calculator/static/media/bin.acdb88147513af4a284fa14a3dfbac58.svg",
+    "static/media/question.svg": "/Salary-calculator/static/media/question.6fe2d6ca251d2a1ca6c6b9edbda074a4.svg",
     "index.html": "/Salary-calculator/index.html",
     "static/media/plus-svgrepo-com.svg": "/Salary-calculator/static/media/plus-svgrepo-com.9f21e089333e5356c0165497aa95ef8c.svg",
-    "main.446faef0.css.map": "/Salary-calculator/static/css/main.446faef0.css.map",
-    "main.906104b4.js.map": "/Salary-calculator/static/js/main.906104b4.js.map",
+    "main.edbdc3fd.css.map": "/Salary-calculator/static/css/main.edbdc3fd.css.map",
+    "main.e168026c.js.map": "/Salary-calculator/static/js/main.e168026c.js.map",
     "498.71d2491c.chunk.js.map": "/Salary-calculator/static/js/498.71d2491c.chunk.js.map",
     "703.c2b9f0be.chunk.js.map": "/Salary-calculator/static/js/703.c2b9f0be.chunk.js.map",
     "258.efee7e81.chunk.js.map": "/Salary-calculator/static/js/258.efee7e81.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.446faef0.css",
-    "static/js/main.906104b4.js"
+    "static/css/main.edbdc3fd.css",
+    "static/js/main.e168026c.js"
   ]
 }
