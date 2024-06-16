@@ -5,6 +5,7 @@ interface CountSalaryArg {
   hours: string;
   bonus: string;
   calls: string;
+  baseHours:string;
   addSSP: boolean;
   exRate: { loading: boolean; usRate: number };
   exchange: boolean;
@@ -12,13 +13,14 @@ interface CountSalaryArg {
 
 export const countSalary = (data: CountSalaryArg): SalaryData => {
   const rate = +data.rate;
+  const baseHours = +data.baseHours
   let bonus = +data.bonus * rate;
   let hours = 0;
   let extraHours = 0;
   let calls = +data.calls;
-  if (+data.hours > 128) {
-    hours = 128;
-    extraHours = +data.hours - 128;
+  if (+data.hours > baseHours) {
+    hours = baseHours;
+    extraHours = +data.hours - baseHours;
   } else {
     hours = +data.hours;
   }

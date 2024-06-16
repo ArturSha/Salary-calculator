@@ -1,7 +1,8 @@
 .container-parameters-inputs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  max-width: 400px;
 }
 .container-parameters-modal__svg-btn {
   width: 24px;

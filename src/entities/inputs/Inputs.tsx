@@ -1,12 +1,12 @@
-import React, { memo, useCallback, useState } from 'react';
-import { Input } from '../../components/input/Input';
-import { MonthSelector } from '../../components/monthSelector/MonthSelector';
-import { useTranslations } from '../../hooks/useTranslations';
-import { MinutesToHourModal } from '../../pages/minutesToHourModal/MinutesToHourModal';
-import svgWatch from './watch.svg';
-import question from './question.svg';
-import { BonusModal } from '../../pages/bonusModal/BonusModal';
-import './inputs.css';
+import React, { memo, useCallback, useState } from "react";
+import { Input } from "../../components/input/Input";
+import { MonthSelector } from "../../components/monthSelector/MonthSelector";
+import { useTranslations } from "../../hooks/useTranslations";
+import { MinutesToHourModal } from "../../pages/minutesToHourModal/MinutesToHourModal";
+import svgWatch from "./watch.svg";
+import question from "./question.svg";
+import { BonusModal } from "../../pages/bonusModal/BonusModal";
+import "./inputs.css";
 
 interface InputsType {
   language: string;
@@ -16,6 +16,7 @@ interface InputsType {
   bonus: string;
   isNightShift: boolean;
   year: string;
+  baseHours: string;
   handleMonthChange: (value: number) => void;
   handleBonus: React.ChangeEventHandler<HTMLInputElement>;
   handleYear: React.ChangeEventHandler<HTMLInputElement>;
@@ -23,6 +24,7 @@ interface InputsType {
   handleBlur: React.ChangeEventHandler<HTMLInputElement>;
   handleRate: React.ChangeEventHandler<HTMLInputElement>;
   handleHours: React.ChangeEventHandler<HTMLInputElement>;
+  handleBaseHours: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Inputs = memo((props: InputsType) => {
@@ -34,6 +36,8 @@ export const Inputs = memo((props: InputsType) => {
     bonus,
     isNightShift,
     year,
+    baseHours,
+    handleBaseHours,
     handleHours,
     handleCalls,
     handleBlur,
@@ -58,13 +62,13 @@ export const Inputs = memo((props: InputsType) => {
   }, [isTimeToHourModalActive]);
 
   return (
-    <div className='container-parameters-inputs'>
+    <div className="container-parameters-inputs">
       <Input
         onChange={handleRate}
-        min='0'
+        min="0"
         value={rate}
-        step='0.5'
-        type='number'
+        step="0.5"
+        type="number"
         label={t.parameters.rate}
       />
 
@@ -72,33 +76,42 @@ export const Inputs = memo((props: InputsType) => {
         value={hours}
         onChange={handleHours}
         label={t.parameters.totalHours}
-        type='number'
-        min='0'
+        type="number"
+        min="0"
         modal={true}
         modalSrc={svgWatch}
         modalOnClick={handleTimeModal}
-        modalAlt='button'
-        modalClassName='container-parameters-modal__svg-btn'
+        modalAlt="button"
+        modalClassName="container-parameters-modal__svg-btn"
       />
       <Input
         value={calls}
         onChange={handleCalls}
-        min='24'
+        min="24"
         label={t.parameters.calls}
-        type='number'
+        type="number"
         onBlur={handleBlur}
       />
       <Input
         value={bonus}
         onChange={handleBonus}
         label={t.parameters.bonus}
-        type='number'
+        type="number"
         modal={true}
         modalSrc={question}
-        modalClassName='container-parameters-modal__svg-btn'
-        modalAlt='button'
+        modalClassName="container-parameters-modal__svg-btn"
+        modalAlt="button"
         modalOnClick={handleBonusModal}
       />
+
+      {isNightShift && (
+        <Input
+          value={baseHours}
+          onChange={handleBaseHours}
+          label={t.parameters.baseHours}
+          type="number"
+        />
+      )}
       {isBonusModalActive && (
         <BonusModal
           isModalActive={isBonusModalActive}
@@ -120,7 +133,7 @@ export const Inputs = memo((props: InputsType) => {
             value={year}
             onChange={handleYear}
             label={t.parameters.year}
-            type='number'
+            type="number"
           />
           <MonthSelector language={language} onChange={handleMonthChange} />
         </>

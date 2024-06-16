@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { countSalary } from '../../calcFunctions/getNightShiftSalary';
-import { countDaySalary } from '../../calcFunctions/getDayShiftSalary';
-import { getWorkingDaysOfMonth } from '../../calcFunctions/getWorkingHours';
-import { getFivePercent } from '../../calcFunctions/getTaxFivePercent';
-import { DoughnutChart } from '../../components/doughnut/Doughnut';
-import { useTranslations } from '../../hooks/useTranslations';
-import { saveToLocalStorage } from '../../helpers/saveToLocal';
-import { getValueFromLocalStorage } from '../../helpers/getFromLocal';
-import { Results } from '../../entities/results/Results';
-import { Checkboxes } from '../../entities/checkboxes/Checkboxes';
-import { Inputs } from '../../entities/inputs/Inputs';
-import { Button } from '../../components/button/Button';
-import { AddToArchiveModal } from '../addToArchiveModal/AddToArchiveModal';
-import { getCurrentDate } from '../../helpers/getCurrentDate';
-import './main.css';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { countSalary } from "../../calcFunctions/getNightShiftSalary";
+import { countDaySalary } from "../../calcFunctions/getDayShiftSalary";
+import { getWorkingDaysOfMonth } from "../../calcFunctions/getWorkingHours";
+import { getFivePercent } from "../../calcFunctions/getTaxFivePercent";
+import { DoughnutChart } from "../../components/doughnut/Doughnut";
+import { useTranslations } from "../../hooks/useTranslations";
+import { saveToLocalStorage } from "../../helpers/saveToLocal";
+import { getValueFromLocalStorage } from "../../helpers/getFromLocal";
+import { Results } from "../../entities/results/Results";
+import { Checkboxes } from "../../entities/checkboxes/Checkboxes";
+import { Inputs } from "../../entities/inputs/Inputs";
+import { Button } from "../../components/button/Button";
+import { AddToArchiveModal } from "../addToArchiveModal/AddToArchiveModal";
+import { getCurrentDate } from "../../helpers/getCurrentDate";
+import "./main.css";
 
 interface MainType {
   theme: boolean;
@@ -21,12 +21,13 @@ interface MainType {
 }
 
 export const Main: React.FC<MainType> = ({ theme, language }) => {
-  const [rate, setRate] = useState<string>('');
-  const [hours, setHours] = useState<string>('');
-  const [bonus, setBonus] = useState<string>('');
-  const [calls, setCalls] = useState<string>('27');
+  const [rate, setRate] = useState<string>("");
+  const [hours, setHours] = useState<string>("");
+  const [bonus, setBonus] = useState<string>("");
+  const [calls, setCalls] = useState<string>("27");
+  const [baseHours, setBaseHours] = useState<string>("128");
   const [year, setYear] = useState<string>(`${new Date().getFullYear()}`);
-  const [month, setMonth] = useState<string>('0');
+  const [month, setMonth] = useState<string>("0");
   const [isNightShift, setIsNightShift] = useState<boolean>(false);
   const [taxRate, setTaxRate] = useState<boolean>(true);
   const [addSSP, setAddTax] = useState<boolean>(false);
@@ -42,17 +43,18 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
 
   useEffect(() => {
     const valuePairs: [string, React.Dispatch<React.SetStateAction<any>>][] = [
-      ['rate', setRate],
-      ['isNightShift', setIsNightShift],
-      ['tax', setAddTax],
-      ['taxRate', setTaxRate],
-      ['hours', setHours],
-      ['bonus', setBonus],
-      ['calls', setCalls],
+      ["rate", setRate],
+      ["isNightShift", setIsNightShift],
+      ["tax", setAddTax],
+      ["taxRate", setTaxRate],
+      ["hours", setHours],
+      ["bonus", setBonus],
+      ["calls", setCalls],
+      ["baseHours", setBaseHours],
     ];
 
     valuePairs.forEach(([key, setValue]) => {
-      const savedValue = getValueFromLocalStorage('parameters', key);
+      const savedValue = getValueFromLocalStorage("parameters", key);
       if (savedValue !== null) {
         setValue(savedValue);
       }
@@ -67,7 +69,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         if (!response.ok) {
           setExRate({ loading: false, usRate: 0 });
 
-          throw new Error('Failed to fetch exchange rates');
+          throw new Error("Failed to fetch exchange rates");
         }
       });
   }, []);
@@ -79,13 +81,13 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   const toggleTax = useCallback(() => {
     setAddTax((addSSP) => !addSSP);
     const value = !addSSP;
-    saveToLocalStorage('parameters', 'tax', value);
+    saveToLocalStorage("parameters", "tax", value);
   }, [addSSP]);
 
   const toggleTaxRate = useCallback(() => {
     setTaxRate((taxRate) => !taxRate);
     const value = !taxRate;
-    saveToLocalStorage('parameters', 'taxRate', value);
+    saveToLocalStorage("parameters", "taxRate", value);
   }, [taxRate]);
 
   const toggleExchange = useCallback(() => {
@@ -95,17 +97,17 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   const toggleNightShiftStatus = useCallback(() => {
     setIsNightShift((isNightShift) => !isNightShift);
     const value = !isNightShift;
-    saveToLocalStorage('parameters', 'isNightShift', value);
+    saveToLocalStorage("parameters", "isNightShift", value);
   }, [isNightShift]);
 
   const handleRate = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     if (Number(value) < 0) {
-      setRate('0');
-      saveToLocalStorage('parameters', 'rate', '0');
+      setRate("0");
+      saveToLocalStorage("parameters", "rate", "0");
     } else {
       setRate(value);
-      saveToLocalStorage('parameters', 'rate', value);
+      saveToLocalStorage("parameters", "rate", value);
     }
   }, []);
 
@@ -113,37 +115,51 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
     const value = e.target.value.toString();
 
     if (Number(value) < 0) {
-      setHours('0');
-      saveToLocalStorage('parameters', 'hours', '0');
+      setHours("0");
+      saveToLocalStorage("parameters", "hours", "0");
     } else {
       setHours(value);
-      saveToLocalStorage('parameters', 'hours', value);
+      saveToLocalStorage("parameters", "hours", value);
     }
   }, []);
 
   const handleBonus = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
     if (Number(value) < 0) {
-      setBonus('0');
-      saveToLocalStorage('parameters', 'bonus', '0');
+      setBonus("0");
+      saveToLocalStorage("parameters", "bonus", "0");
     } else {
       setBonus(value);
-      saveToLocalStorage('parameters', 'bonus', value);
+      saveToLocalStorage("parameters", "bonus", value);
     }
   }, []);
+
+  const handleBaseHours = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.toString();
+      if (Number(value) < 0) {
+        setBaseHours("0");
+        saveToLocalStorage("parameters", "baseHours", "0");
+      } else {
+        setBaseHours(value);
+        saveToLocalStorage("parameters", "baseHours", value);
+      }
+    },
+    []
+  );
 
   const handleCalls = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toString();
 
     if (Number(value) > 30) {
-      saveToLocalStorage('parameters', 'calls', '30');
-      setCalls('30');
+      saveToLocalStorage("parameters", "calls", "30");
+      setCalls("30");
     } else {
       setCalls(value);
       saveToLocalStorage(
-        'parameters',
-        'calls',
-        Number(value) > 23 ? value : '27'
+        "parameters",
+        "calls",
+        Number(value) > 23 ? value : "27"
       );
     }
   }, []);
@@ -154,7 +170,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       if (isValid) {
         setCalls(value);
       } else {
-        setCalls('27');
+        setCalls("27");
       }
     },
     [calls]
@@ -180,6 +196,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
         calls,
         exRate,
         exchange,
+        baseHours,
       });
     }
     return countDaySalary({
@@ -193,6 +210,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
       baseForDayShift,
     });
   }, [
+    isNightShift,
     addSSP,
     rate,
     hours,
@@ -200,8 +218,8 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
     calls,
     exRate,
     exchange,
-    isNightShift,
     baseForDayShift,
+    baseHours,
   ]);
 
   const tax = getFivePercent(
@@ -228,11 +246,12 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
   ]);
 
   return (
-    <div className='container'>
-      <div className='container-options'>
-        <div className='container-parameters'>
-          <h2 className='options-subtitle'>{t.parameters.parameters}</h2>
+    <div className="container">
+      <div className="container-options">
+        <div className="container-parameters">
+          <h2 className="options-subtitle">{t.parameters.parameters}</h2>
           <Inputs
+            baseHours={baseHours}
             language={language}
             rate={rate}
             hours={hours}
@@ -240,6 +259,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
             bonus={bonus}
             year={year}
             isNightShift={isNightShift}
+            handleBaseHours={handleBaseHours}
             handleBonus={handleBonus}
             handleYear={handleYear}
             handleCalls={handleCalls}
@@ -291,7 +311,7 @@ export const Main: React.FC<MainType> = ({ theme, language }) => {
           bonusHours={bonus}
           calls={calls}
           rate={rate}
-          baseForDayShift={isNightShift ? null : baseForDayShift}
+          baseForDayShift={isNightShift ? baseHours : baseForDayShift}
           setActive={setIsArchiveModalActive}
           toggleExchange={toggleExchange}
         />

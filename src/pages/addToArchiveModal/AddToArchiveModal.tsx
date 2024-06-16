@@ -1,13 +1,13 @@
-import React, { RefObject, memo, useCallback, useRef, useState } from 'react';
-import { useTranslations } from '../../hooks/useTranslations';
-import { SalaryData } from '../../calcFunctions/getDayShiftSalary';
-import { saveToLocalArchive } from '../../helpers/saveToLocalArchive';
-import { Result } from '../../components/result/Result';
-import { Input } from '../../components/input/Input';
-import { MonthSelector } from '../../components/monthSelector/MonthSelector';
-import { Button } from '../../components/button/Button';
-import { Modal } from '../../components/modal/Modal';
-import './addToArchiveModal.css';
+import React, { RefObject, memo, useCallback, useRef, useState } from "react";
+import { useTranslations } from "../../hooks/useTranslations";
+import { SalaryData } from "../../calcFunctions/getDayShiftSalary";
+import { saveToLocalArchive } from "../../helpers/saveToLocalArchive";
+import { Result } from "../../components/result/Result";
+import { Input } from "../../components/input/Input";
+import { MonthSelector } from "../../components/monthSelector/MonthSelector";
+import { Button } from "../../components/button/Button";
+import { Modal } from "../../components/modal/Modal";
+import "./addToArchiveModal.css";
 
 interface AddToArchiveModalTypes {
   name: string;
@@ -19,7 +19,7 @@ interface AddToArchiveModalTypes {
   bonusHours: string;
   calls: string;
   rate: string;
-  baseForDayShift: number | null;
+  baseForDayShift: number | string;
 
   setActive: (arg: boolean) => void;
   toggleExchange: () => void;
@@ -102,13 +102,13 @@ export const AddToArchiveModal = memo((props: AddToArchiveModalTypes) => {
 
   return (
     <Modal active={isModalActive} setActive={setActive}>
-      <div className='inputs-container'>
+      <div className="inputs-container">
         <MonthSelector language={language} saveToLocal={false} ref={valueRef} />
         <Input
           value={year}
           onChange={handleYear}
           label={t.parameters.year}
-          type='number'
+          type="number"
         />
       </div>
       <Result

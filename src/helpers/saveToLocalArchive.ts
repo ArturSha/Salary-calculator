@@ -11,7 +11,7 @@ export const saveToLocalArchive = (
   calls: string,
   callsBonus: string,
   rate: string,
-  baseForDayShift: number | null,
+  baseForDayShift: number | string,
   bonus: string,
   bonusHours: string,
   baseSalary: string,
