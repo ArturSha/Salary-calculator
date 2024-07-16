@@ -40,8 +40,11 @@ input[type="date"] {
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  background-color: #f4e79e;
   padding: 5px 8px ;
+}
+
+#dark input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #f4e79e;
 }
 
 /* LABEL ======================================= */
