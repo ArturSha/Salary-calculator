@@ -86,6 +86,7 @@
     "rate": "Exchange rate:",
     "toPay": "5% Tax:",
     "currency": " ₴",
-    "totalAmount": "Total amount: "
+    "totalAmount": "Total amount 5%: ",
+    "totalAmountOnePercent": "Total amount 1%: "
   }
 }

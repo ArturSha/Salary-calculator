@@ -87,7 +87,8 @@
     "rate": "Курс:",
     "toPay": "5% Налог:",
     "currency": " ₴",
-    "totalAmount": "Итоговая сумма: "
+    "totalAmount": "Итоговая сумма 5%: ",
+    "totalAmountOnePercent": "Итоговая сумма 1%: "
 
 
   }

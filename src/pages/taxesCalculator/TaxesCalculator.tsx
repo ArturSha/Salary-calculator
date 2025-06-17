@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
-import { Taxes } from '../../entities/taxes/Taxes';
-import addComponentSvg from './plus-svgrepo-com.svg';
-import './TaxesCalculator.css';
-import { useTranslations } from '../../hooks/useTranslations';
+import { useCallback, useState } from "react";
+import { Taxes } from "../../entities/taxes/Taxes";
+import addComponentSvg from "./plus-svgrepo-com.svg";
+import "./TaxesCalculator.css";
+import { useTranslations } from "../../hooks/useTranslations";
 
 interface TaxesCalculatorProps {
   language: string;
@@ -28,12 +28,12 @@ export const TaxesCalculator = ({ language }: TaxesCalculatorProps) => {
     setComponents(newComponents);
   };
 
-  const totalToFixed = total
-    .reduce((acc, current) => acc + current, 0)
-    .toFixed(3);
+  const totalAmount = total.reduce((acc, current) => acc + current, 0);
+  const totalToFixed = totalAmount.toFixed(3);
+  const onePercent = (totalAmount / 5).toFixed(3);
 
   return (
-    <div className='taxes'>
+    <div className="taxes">
       {components.map((el) => (
         <Taxes
           i={el}
@@ -42,14 +42,18 @@ export const TaxesCalculator = ({ language }: TaxesCalculatorProps) => {
           language={language}
         />
       ))}
-      <p className='totalAmount'>
+      <p className="totalAmount">
+        {t.taxes.totalAmountOnePercent}
+        <span>{onePercent} ₴</span>
+      </p>
+      <p className="totalAmount">
         {t.taxes.totalAmount}
         <span>{totalToFixed} ₴</span>
       </p>
       <img
-        className='addComponent'
+        className="addComponent"
         src={addComponentSvg}
-        alt='addComponent'
+        alt="addComponent"
         onClick={addComponentHandler}
       />
     </div>
